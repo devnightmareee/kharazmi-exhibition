@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" id="mainHtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>بازارهای مالی | ۱۲۰ نماد + آنالیزور + پیشنهاد خرید/فروش</title>
+    
+    <link rel="manifest" href="data:application/manifest+json,{
+        \"name\": \"MarketWatch \",
+        \"short_name\": \"MarketWatch\",
+        \"description\": \"بازارهای مالی ایران - رمزارزها، بورس، فلزات، ارزها و انرژی\",
+        \"start_url\": \".\",
+        \"display\": \"standalone\",
+        \"theme_color\": \"#0a0c12\",
+        \"background_color\": \"#0a0c12\",
+        \"icons\": [
+            { \"src\": \"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📊%3C/text%3E%3C/svg%3E\", \"sizes\": \"any\", \"type\": \"image/svg+xml\" }
+        ]
+    }">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MarketWatch">
+    <meta name="theme-color" content="#0a0c12">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.3s, color 0.2s, border-color 0.2s; }
+        
+        :root {
+            --bg-body: linear-gradient(135deg, #0a0c12 0%, #0f1420 100%);
+            --bg-card: rgba(18,22,35,0.9);
+            --text-primary: #f0f3fa;
+            --text-secondary: #8e9aaf;
+            --border-color: rgba(255,255,255,0.1);
+            --border-light: #2a2f3f;
+            --positive: #2ed573;
+            --negative: #ff6b6b;
+            --neutral: #f6b93b;
+            --tab-bg: rgba(30,36,56,0.8);
+            --tab-active: linear-gradient(135deg, #f6b93b, #fda085);
+            --filter-bg: rgba(18,22,35,0.8);
+            --stats-bg: rgba(18,22,35,0.6);
+            --modal-bg: #11161f;
+            --chart-bg: #0a0e16;
+            --market-card-bg: rgba(18,22,35,0.95);
+            --suggestion-bg: linear-gradient(135deg, #1a1f2e, #0f1420);
+            --btn-bg: #f6b93b;
+            --btn-color: #0a0c12;
+        }
+        
+        body.light {
+            --bg-body: linear-gradient(135deg, #f0f2f5 0%, #e0e4e8 100%);
+            --bg-card: rgba(255,255,255,0.95);
+            --text-primary: #1a1a2e;
+            --text-secondary: #6c7a91;
+            --border-color: rgba(0,0,0,0.1);
+            --border-light: #d0d5db;
+            --positive: #2ed573;
+            --negative: #ff6b6b;
+            --neutral: #f6b93b;
+            --tab-bg: rgba(230,235,245,0.9);
+            --tab-active: linear-gradient(135deg, #f6b93b, #fda085);
+            --filter-bg: rgba(240,242,245,0.9);
+            --stats-bg: rgba(230,235,245,0.8);
+            --modal-bg: #ffffff;
+            --chart-bg: #f0f2f5;
+            --market-card-bg: rgba(255,255,255,0.95);
+            --suggestion-bg: linear-gradient(135deg, #e8ecf2, #dfe3e9);
+            --btn-bg: #f6b93b;
+            --btn-color: #1a1a2e;
+        }
+        
+        body { background: var(--bg-body); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: var(--text-primary); min-height: 100vh; }
+        .main-tabs { background: rgba(10,12,18,0.95); backdrop-filter: blur(10px); padding: 0.6rem 1rem; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
+        body.light .main-tabs { background: rgba(255,255,255,0.95); }
+        .tabs-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+        .logo { display: flex; align-items: center; gap: 0.5rem; }
+        .logo h1 { font-size: 1.2rem; background: linear-gradient(135deg, #f6d365, #fda085); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .tabs { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+        .tab-btn { padding: 0.35rem 0.6rem; border: none; background: var(--tab-bg); color: var(--text-secondary); font-size: 0.65rem; font-weight: 600; border-radius: 2rem; cursor: pointer; transition: all 0.3s; }
+        .tab-btn.active { background: var(--tab-active); color: #0a0c12; }
+        .link-btn { padding: 0.35rem 0.6rem; background: var(--tab-bg); color: var(--text-secondary); font-size: 0.65rem; font-weight: 600; border-radius: 2rem; text-decoration: none; display: inline-block; transition: all 0.3s; }
+        .link-btn:hover { background: var(--tab-active); color: #0a0c12; }
+        .theme-btn { background: var(--tab-bg); color: var(--text-secondary); border: none; padding: 0.35rem 0.6rem; border-radius: 2rem; font-size: 0.65rem; cursor: pointer; transition: all 0.3s; }
+        .theme-btn:hover { background: var(--tab-active); color: #0a0c12; }
+        .lang-btn { background: var(--tab-bg); color: var(--text-secondary); border: none; padding: 0.35rem 0.6rem; border-radius: 2rem; font-size: 0.65rem; cursor: pointer; transition: all 0.3s; }
+        .lang-btn:hover { background: var(--tab-active); color: #0a0c12; }
+        .filter-bar { background: var(--filter-bg); padding: 0.5rem 1rem; border-bottom: 1px solid var(--border-color); }
+        .filter-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+        .filter-group { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+        .filter-btn { background: #1e2438; border: none; padding: 0.25rem 0.6rem; border-radius: 2rem; color: var(--text-secondary); cursor: pointer; font-size: 0.65rem; transition: all 0.2s; }
+        body.light .filter-btn { background: #e0e4e8; color: #1a1a2e; }
+        .filter-btn.active { background: #3498db; color: white; }
+        .search-box { display: flex; align-items: center; background: #131724; border-radius: 2rem; padding: 0.25rem 0.6rem; gap: 0.3rem; border: 1px solid var(--border-light); }
+        .search-box input { background: transparent; border: none; color: var(--text-primary); padding: 0.2rem; outline: none; width: 130px; font-size: 0.7rem; }
+        .stats-bar { background: var(--stats-bg); margin: 0.5rem 1rem; padding: 0.4rem 0.5rem; border-radius: 0.8rem; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 0.5rem; }
+        .stat-item { text-align: center; cursor: pointer; transition: all 0.2s; padding: 0.2rem 0.4rem; border-radius: 0.5rem; }
+        .stat-item:hover { background: rgba(246,185,59,0.2); }
+        .stat-label { font-size: 0.55rem; color: var(--text-secondary); }
+        .stat-value { font-size: 0.85rem; font-weight: bold; }
+        .positive { color: var(--positive); }
+        .negative { color: var(--negative); }
+        .neutral { color: var(--neutral); }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0.5rem 1rem 1rem; }
+        
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.7rem; margin-top: 0.5rem; }
+        .card { background: var(--bg-card); border-radius: 0.9rem; padding: 0.7rem; border: 1px solid var(--border-color); transition: all 0.3s; cursor: pointer; }
+        .card:hover { transform: translateY(-2px); border-color: #f6b93b; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.3rem; }
+        .item-info { display: flex; align-items: center; gap: 0.4rem; }
+        .item-icon { width: 32px; height: 32px; background: #1f2a3e; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+        .price { font-size: 0.85rem; font-weight: bold; }
+        .change { font-size: 0.6rem; margin-top: 0.05rem; }
+        .chart-container { height: 80px; margin: 0.3rem 0; position: relative; }
+        .chart-container canvas { width: 100% !important; height: 100% !important; }
+        .details { margin-top: 0.3rem; padding-top: 0.3rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; font-size: 0.5rem; flex-wrap: wrap; gap: 0.2rem; }
+        .prediction { margin-top: 0.3rem; padding: 0.2rem; background: rgba(0,0,0,0.3); border-radius: 0.5rem; text-align: center; font-size: 0.55rem; }
+        .footer { text-align: center; padding: 0.6rem; color: var(--text-secondary); border-top: 1px solid var(--border-color); margin-top: 0.8rem; font-size: 0.6rem; }
+        
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; }
+        .modal.active { display: flex; }
+        .modal-content { background: var(--modal-bg); border-radius: 0.9rem; padding: 0.8rem; max-width: 750px; width: 90%; max-height: 90vh; overflow-y: auto; border: 1px solid #f6b93b; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+        .close-modal { background: none; border: none; color: var(--text-primary); font-size: 1.1rem; cursor: pointer; }
+        .modal-chart-container { height: 200px; margin: 0.5rem 0; }
+        .modal-chart-container canvas { width: 100% !important; height: 100% !important; }
+        .modal-volume-container { height: 70px; margin: 0.5rem 0; }
+        .modal-volume-container canvas { width: 100% !important; height: 100% !important; }
+        .modal-rsi-container { height: 80px; margin: 0.5rem 0; }
+        .modal-rsi-container canvas { width: 100% !important; height: 100% !important; }
+        
+        .markets-overview { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 0.8rem; margin-top: 0.5rem; }
+        .market-card { background: var(--market-card-bg); border-radius: 0.9rem; padding: 0.7rem; border: 1px solid var(--border-color); cursor: pointer; transition: all 0.2s; }
+        .market-card:hover { transform: translateY(-2px); border-color: #f6b93b; }
+        .market-header { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.5rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border-color); }
+        .market-icon { font-size: 1.2rem; }
+        .market-title { font-size: 0.85rem; font-weight: bold; }
+        .market-stats { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.5rem; }
+        .market-stat { text-align: center; flex: 1; min-width: 45px; background: rgba(0,0,0,0.3); border-radius: 0.4rem; padding: 0.25rem; }
+        .market-stat-label { font-size: 0.45rem; color: var(--text-secondary); }
+        .market-stat-value { font-size: 0.75rem; font-weight: bold; }
+        .market-progress { background: #1e2438; border-radius: 0.5rem; height: 8px; overflow: hidden; margin: 0.25rem 0; }
+        .market-progress-fill { height: 100%; border-radius: 0.5rem; transition: width 0.3s; }
+        .market-analysis { font-size: 0.5rem; text-align: center; margin-top: 0.3rem; padding: 0.2rem; background: rgba(52,152,219,0.1); border-radius: 0.35rem; }
+        
+        .suggestion-card { background: var(--suggestion-bg); border-radius: 0.8rem; padding: 0.6rem; margin: 0.5rem 0; text-align: center; border-right: 4px solid; }
+        .suggestion-buy { border-right-color: var(--positive); }
+        .suggestion-sell { border-right-color: var(--negative); }
+        .suggestion-hold { border-right-color: var(--neutral); }
+        .suggestion-title { font-size: 0.7rem; font-weight: bold; margin-bottom: 0.2rem; }
+        .suggestion-reason { font-size: 0.55rem; color: var(--text-secondary); }
+        
+        .install-btn { background: var(--btn-bg); color: var(--btn-color); border: none; padding: 0.3rem 0.8rem; border-radius: 1.5rem; font-size: 0.7rem; font-weight: bold; cursor: pointer; margin-left: 0.5rem; transition: all 0.2s; }
+        .install-btn:hover { background: #fda085; transform: scale(1.02); }
+        .live-badge { background: #ff4444; color: white; font-size: 0.6rem; padding: 0.2rem 0.5rem; border-radius: 1rem; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+        @media (max-width: 768px) { .tabs-container, .filter-container { flex-direction: column; } .container { padding: 0.5rem; } .tab-btn { padding: 0.25rem 0.5rem; font-size: 0.6rem; } }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<div class="main-tabs">
+    <div class="tabs-container">
+        <div class="logo"><span style="font-size: 1.2rem;">📊</span><h1 id="appTitle">MarketWatch ایران <span id="statusBadge" class="live-badge">LIVE</span></h1></div>
+        <div class="tabs">
+            <button class="tab-btn" data-market="crypto" id="tabCrypto">🪙 رمزارز (20)</button>
+            <button class="tab-btn" data-market="stock" id="tabStock">🇮🇷 بورس (20)</button>
+            <button class="tab-btn" data-market="metals" id="tabMetals">🥇 فلزات (20)</button>
+            <button class="tab-btn" data-market="currency" id="tabCurrency">💱 ارز (20)</button>
+            <button class="tab-btn" data-market="energy" id="tabEnergy">🛢️ انرژی (20)</button>
+            <button class="tab-btn" data-market="us_stocks" id="tabUsStocks">🇺🇸 سهام آمریکا (20)</button>
+            <button class="tab-btn active" data-market="overview" id="tabOverview">📈 چشم‌انداز</button>
+            <a href="terminal2.html" class="link-btn" id="linkTerminal">⚙️ مدیریت معاملات</a>
+            <button class="theme-btn" id="themeBtn">🌙 تم شب</button>
+            <button class="lang-btn" id="langBtn">🇬🇧 English</button>
+        </div>
+        <div>
+            <button class="install-btn" id="installAppBtn">📲 نصب اپلیکیشن</button>
+            <span id="lastUpdate" style="font-size:0.6rem;"></span>
+        </div>
+    </div>
+</div>
+
+<div class="filter-bar" id="filterBar" style="display:none">
+    <div class="filter-container">
+        <div class="filter-group">
+            <button class="filter-btn active" data-filter="all" id="filterAll">🏠 همه</button>
+            <button class="filter-btn" data-filter="gainers" id="filterGainers">📈 سبزها</button>
+            <button class="filter-btn" data-filter="losers" id="filterLosers">📉 قرمزها</button>
+        </div>
+        <div class="search-box">
+            <span>🔍</span>
+            <input type="text" id="searchInput" placeholder="جستجو...">
+        </div>
+    </div>
+</div>
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="container">
+    <div id="cardGrid" class="card-grid"></div>
+    <div class="footer" id="footerText">🔮 کلیک روی هر سهم → پیشنهاد خرید/فروش + نمودار نوسان + RSI + آنالیز بازار در تب چشم‌انداز</div>
+</div>
+
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><h3 id="modalTitle">اطلاعات</h3><button class="close-modal" onclick="closeModal()">✕</button></div>
+        <div id="modalBody"></div>
+        <div id="suggestionBox" class="suggestion-card"></div>
+        <div class="modal-chart-container"><canvas id="modalLineChart"></canvas></div>
+        <div class="modal-volume-container"><canvas id="modalVolumeChart"></canvas></div>
+        <div class="modal-rsi-container"><canvas id="modalRSIChart"></canvas></div>
+        <div id="chartPrediction" style="margin-top:0.4rem; padding:0.35rem; background:rgba(52,152,219,0.1); border-radius:0.45rem; text-align:center; font-size:0.65rem;"></div>
+    </div>
+</div>
+
+<div id="analysisModal" class="modal">
+    <div class="modal-content" style="max-width: 400px;">
+        <div class="modal-header"><h3 id="analysisTitle">🎯 آنالیز هوشمند بازار</h3><button class="close-modal" onclick="document.getElementById('analysisModal').classList.remove('active')">✕</button></div>
+        <div id="analysisBody"></div>
+    </div>
+</div>
+
+<script>
+    // ==================== دیکشنری چند زبانه ====================
+    const translations = {
+        fa: {
+            appTitle: "MarketWatch ایران",
+            live: "LIVE",
+            tabs: {
+                crypto: "🪙 رمزارز (20)",
+                stock: "🇮🇷 بورس (20)",
+                metals: "🥇 فلزات (20)",
+                currency: "💱 ارز (20)",
+                energy: "🛢️ انرژی (20)",
+                us_stocks: "🇺🇸 سهام آمریکا (20)",
+                overview: "📈 چشم‌انداز",
+                terminal: "⚙️ مدیریت معاملات"
+            },
+            theme: "🌙 تم شب",
+            lang: "🇬🇧 English",
+            install: "📲 نصب اپلیکیشن",
+            search: "جستجو...",
+            footer: "🔮 کلیک روی هر سهم → پیشنهاد خرید/فروش + نمودار نوسان + RSI + آنالیز بازار در تب چشم‌انداز",
+            analysisTitle: "🎯 آنالیز هوشمند بازار",
+            modalTitle: "اطلاعات",
+            filters: { all: "🏠 همه", gainers: "📈 سبزها", losers: "📉 قرمزها" },
+            stats: { total: "تعداد کل", green: "سبزها", red: "قرمزها", analysis: "🎯 آنالیز", analyze: "تحلیل کن" },
+            overview: { title: "چشم‌انداز بازار", total: "کل نمادها" },
+            price: "قیمت",
+            change: "تغییر",
+            high: "بالاترین",
+            low: "پایین‌ترین",
+            marketCap: "ارزش بازار",
+            volume: "حجم",
+            eps: "EPS",
+            pe: "P/E",
+            prediction: "پیش‌بینی ۲۴ ساعته",
+            analysisStatus: { strongUp: "صعود قوی", mildUp: "صعود ملایم", weakUp: "روند صعودی ضعیف", neutral: "نوسان / بدون روند", weakDown: "روند نزولی ضعیف", mildDown: "نزول ملایم", strongDown: "نزول شدید" },
+            suggestion: { strongBuy: "خرید قوی", mildBuy: "خرید ملایم", hold: "نگهداری / انتظار", sell: "فروش / کاهش", urgentSell: "فروش فوری" }
+        },
+        en: {
+            appTitle: "MarketWatch Iran",
+            live: "LIVE",
+            tabs: {
+                crypto: "🪙 Crypto (20)",
+                stock: "🇮🇷 Stocks (20)",
+                metals: "🥇 Metals (20)",
+                currency: "💱 Forex (20)",
+                energy: "🛢️ Energy (20)",
+                us_stocks: "🇺🇸 US Stocks (20)",
+                overview: "📈 Overview",
+                terminal: "⚙️ Trade Manager"
+            },
+            theme: "🌙 Dark Mode",
+            lang: "🇮🇷 فارسی",
+            install: "📲 Install App",
+            search: "Search...",
+            footer: "🔮 Click on any asset → Buy/Sell suggestion + Price chart + RSI + Market analysis in Overview tab",
+            analysisTitle: "🎯 Smart Market Analysis",
+            modalTitle: "Information",
+            filters: { all: "🏠 All", gainers: "📈 Gainers", losers: "📉 Losers" },
+            stats: { total: "Total", green: "Green", red: "Red", analysis: "🎯 Analysis", analyze: "Analyze" },
+            overview: { title: "Market Overview", total: "Total Symbols" },
+            price: "Price",
+            change: "Change",
+            high: "High",
+            low: "Low",
+            marketCap: "Market Cap",
+            volume: "Volume",
+            eps: "EPS",
+            pe: "P/E",
+            prediction: "24h Prediction",
+            analysisStatus: { strongUp: "Strong Up", mildUp: "Mild Up", weakUp: "Weak Up", neutral: "Neutral", weakDown: "Weak Down", mildDown: "Mild Down", strongDown: "Strong Down" },
+            suggestion: { strongBuy: "Strong Buy", mildBuy: "Mild Buy", hold: "Hold / Wait", sell: "Sell / Reduce", urgentSell: "Urgent Sell" }
+        }
+    };
+
+    let currentLang = 'fa';
+
+    function getText(key) {
+        const keys = key.split('.');
+        let result = translations[currentLang];
+        for (const k of keys) {
+            if (result && result[k] !== undefined) result = result[k];
+            else return key;
+        }
+        return result;
+    }
+
+    function updateLanguage() {
+        document.getElementById('appTitle').innerHTML = getText('appTitle') + ' <span id="statusBadge" class="live-badge">' + getText('live') + '</span>';
+        document.getElementById('footerText').textContent = getText('footer');
+        document.getElementById('analysisTitle').textContent = getText('analysisTitle');
+        document.getElementById('modalTitle').textContent = getText('modalTitle');
+        document.getElementById('themeBtn').textContent = getText('theme');
+        document.getElementById('langBtn').textContent = getText('lang');
+        document.getElementById('installAppBtn').textContent = getText('install');
+        document.getElementById('searchInput').placeholder = getText('search');
+        document.getElementById('linkTerminal').textContent = getText('tabs.terminal');
+        
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            const market = btn.getAttribute('data-market');
+            if (market && getText('tabs')[market]) {
+                btn.textContent = getText('tabs')[market];
+            }
+        });
+        
+        document.getElementById('filterAll').textContent = getText('filters.all');
+        document.getElementById('filterGainers').textContent = getText('filters.gainers');
+        document.getElementById('filterLosers').textContent = getText('filters.losers');
+        
+        localStorage.setItem('marketLang', currentLang);
+        renderCards();
+        updateStatsBar();
+    }
+
+    // ==================== نام‌های سهام ====================
+    const stockNames = {
+        fa: {
+            "بیت‌کوین": "بیت‌کوین", "اتریوم": "اتریوم", "تتر": "تتر", "بی ان بی": "بی ان بی",
+            "سولانا": "سولانا", "ریپل": "ریپل", "کاردانو": "کاردانو", "دوج کوین": "دوج کوین",
+            "ترون": "ترون", "آوالانچ": "آوالانچ", "پولکادات": "پولکادات", "لایت کوین": "لایت کوین",
+            "چین لینک": "چین لینک", "یونی سواپ": "یونی سواپ", "اتمیوم": "اتمیوم",
+            "الگوراند": "الگوراند", "وی چین": "وی چین", "استلار": "استلار",
+            "تزوس": "تزوس", "انیگرام": "انیگرام",
+            "فولاد مبارکه": "فولاد مبارکه", "خلیج فارس": "خلیج فارس", "ملی مس": "ملی مس",
+            "وامید": "وامید", "بانک ملت": "بانک ملت", "پارس خودرو": "پارس خودرو",
+            "سایپا": "سایپا", "گل گهر": "گل گهر", "مخابرات ایران": "مخابرات ایران",
+            "پالایش نفت اصفهان": "پالایش نفت اصفهان", "کشتیرانی": "کشتیرانی",
+            "سیمان فارس": "سیمان فارس", "ایران خودرو": "ایران خودرو", "بیمه ایران": "بیمه ایران",
+            "پتروشیمی جم": "پتروشیمی جم", "ذوب آهن": "ذوب آهن", "دارویی برکت": "دارویی برکت",
+            "کاشی الوند": "کاشی الوند", "آذرآب": "آذرآب", "پتروشیمی تندگویان": "پتروشیمی تندگویان",
+            "طلای ۱۸ عیار": "طلای ۱۸ عیار", "طلای جهانی": "طلای جهانی", "نقره جهانی": "نقره جهانی",
+            "پلاتین": "پلاتین", "مس": "مس", "آلومینیوم": "آلومینیوم", "روی": "روی",
+            "نیکل": "نیکل", "سرب": "سرب", "قلع": "قلع", "کبالت": "کبالت",
+            "لیتیوم": "لیتیوم", "سکه امامی": "سکه امامی", "نیم سکه": "نیم سکه",
+            "ربع سکه": "ربع سکه", "گرم طلا": "گرم طلا", "پالادیوم": "پالادیوم",
+            "تیتانیوم": "تیتانیوم", "اورانیوم": "اورانیوم", "منگنز": "منگنز",
+            "دلار آمریکا": "دلار آمریکا", "یورو": "یورو", "پوند انگلیس": "پوند انگلیس",
+            "درهم امارات": "درهم امارات", "لیر ترکیه": "لیر ترکیه", "دلار کانادا": "دلار کانادا",
+            "دلار استرالیا": "دلار استرالیا", "فرانک سوئیس": "فرانک سوئیس", "یوان چین": "یوان چین",
+            "روپیه هند": "روپیه هند", "وون کره": "وون کره", "دلار سنگاپور": "دلار سنگاپور",
+            "ریال قطر": "ریال قطر", "دینار عراق": "دینار عراق", "روبل روسیه": "روبل روسیه",
+            "ین ژاپن": "ین ژاپن", "دلار نیوزیلند": "دلار نیوزیلند", "رینگیت مالزی": "رینگیت مالزی",
+            "بات تایلند": "بات تایلند", "دینار کویت": "دینار کویت",
+            "نفت خام برنت": "نفت خام برنت", "نفت خام WTI": "نفت خام WTI", "گاز طبیعی": "گاز طبیعی",
+            "بنزین": "بنزین", "نفت کوره": "نفت کوره", "گازوئیل": "گازوئیل",
+            "پروپان": "پروپان", "اتان": "اتان", "متان": "متان", "زغال سنگ": "زغال سنگ",
+            "اورانیوم": "اورانیوم", "هیدروژن": "هیدروژن", "بیودیزل": "بیودیزل",
+            "اتانول": "اتانول", "نفت سفید": "نفت سفید", "بیوتان": "بیوتان",
+            "نفتا": "نفتا", "آسفالت": "آسفالت", "ال‌پی‌جی": "ال‌پی‌جی", "نفت سنگین": "نفت سنگین",
+            "اپل": "اپل", "گوگل": "گوگل", "مایکروسافت": "مایکروسافت", "آمازون": "آمازون",
+            "تسلا": "تسلا", "متا": "متا", "نتفلیکس": "نتفلیکس", "انویدیا": "انویدیا",
+            "کوکاکولا": "کوکاکولا", "مک‌دونالد": "مک‌دونالد", "پپسی": "پپسی",
+            "والمارت": "والمارت", "پروکتر اند گمبل": "پروکتر اند گمبل",
+            "جانسون اند جانسون": "جانسون اند جانسون", "مرک": "مرک", "اب‌وی": "اب‌وی",
+            "نایکی": "نایکی", "استارباکس": "استارباکس", "اوبر": "اوبر", "بوئینگ": "بوئینگ"
+        },
+        en: {
+            "بیت‌کوین": "Bitcoin", "اتریوم": "Ethereum", "تتر": "Tether", "بی ان بی": "BNB",
+            "سولانا": "Solana", "ریپل": "XRP", "کاردانو": "Cardano", "دوج کوین": "Dogecoin",
+            "ترون": "TRON", "آوالانچ": "Avalanche", "پولکادات": "Polkadot", "لایت کوین": "Litecoin",
+            "چین لینک": "Chainlink", "یونی سواپ": "Uniswap", "اتمیوم": "Cosmos",
+            "الگوراند": "Algorand", "وی چین": "VeChain", "استلار": "Stellar",
+            "تزوس": "Tezos", "انیگرام": "Near Protocol",
+            "فولاد مبارکه": "Mobarakeh Steel", "خلیج فارس": "Persian Gulf", "ملی مس": "National Copper",
+            "وامید": "Omid Investment", "بانک ملت": "Mellat Bank", "پارس خودرو": "Pars Khodro",
+            "سایپا": "Saipa", "گل گهر": "Gol Gohar", "مخابرات ایران": "Iran Telecom",
+            "پالایش نفت اصفهان": "Esfahan Oil Refinery", "کشتیرانی": "IRISL",
+            "سیمان فارس": "Fars Cement", "ایران خودرو": "Iran Khodro", "بیمه ایران": "Iran Insurance",
+            "پتروشیمی جم": "Jam Petrochemical", "ذوب آهن": "Esfahan Steel", "دارویی برکت": "Barkat Pharma",
+            "کاشی الوند": "Alvand Tile", "آذرآب": "Azarab", "پتروشیمی تندگویان": "Tondguyan Petrochemical",
+            "طلای ۱۸ عیار": "18K Gold", "طلای جهانی": "Global Gold", "نقره جهانی": "Global Silver",
+            "پلاتین": "Platinum", "مس": "Copper", "آلومینیوم": "Aluminum", "روی": "Zinc",
+            "نیکل": "Nickel", "سرب": "Lead", "قلع": "Tin", "کبالت": "Cobalt",
+            "لیتیوم": "Lithium", "سکه امامی": "Emami Coin", "نیم سکه": "Half Coin",
+            "ربع سکه": "Quarter Coin", "گرم طلا": "Gold Gram", "پالادیوم": "Palladium",
+            "تیتانیوم": "Titanium", "اورانیوم": "Uranium", "منگنز": "Manganese",
+            "دلار آمریکا": "US Dollar", "یورو": "Euro", "پوند انگلیس": "British Pound",
+            "درهم امارات": "UAE Dirham", "لیر ترکیه": "Turkish Lira", "دلار کانادا": "Canadian Dollar",
+            "دلار استرالیا": "Australian Dollar", "فرانک سوئیس": "Swiss Franc", "یوان چین": "Chinese Yuan",
+            "روپیه هند": "Indian Rupee", "وون کره": "Korean Won", "دلار سنگاپور": "Singapore Dollar",
+            "ریال قطر": "Qatari Riyal", "دینار عراق": "Iraqi Dinar", "روبل روسیه": "Russian Ruble",
+            "ین ژاپن": "Japanese Yen", "دلار نیوزیلند": "New Zealand Dollar", "رینگیت مالزی": "Malaysian Ringgit",
+            "بات تایلند": "Thai Baht", "دینار کویت": "Kuwaiti Dinar",
+            "نفت خام برنت": "Brent Crude", "نفت خام WTI": "WTI Crude", "گاز طبیعی": "Natural Gas",
+            "بنزین": "Gasoline", "نفت کوره": "Fuel Oil", "گازوئیل": "Diesel",
+            "پروپان": "Propane", "اتان": "Ethane", "متان": "Methane", "زغال سنگ": "Coal",
+            "اورانیوم": "Uranium", "هیدروژن": "Hydrogen", "بیودیزل": "Biodiesel",
+            "اتانول": "Ethanol", "نفت سفید": "Kerosene", "بیوتان": "Butane",
+            "نفتا": "Naphtha", "آسفالت": "Asphalt", "ال‌پی‌جی": "LPG", "نفت سنگین": "Heavy Fuel Oil",
+            "اپل": "Apple", "گوگل": "Google", "مایکروسافت": "Microsoft", "آمازون": "Amazon",
+            "تسلا": "Tesla", "متا": "Meta", "نتفلیکس": "Netflix", "انویدیا": "NVIDIA",
+            "کوکاکولا": "Coca-Cola", "مک‌دونالد": "McDonald's", "پپسی": "PepsiCo",
+            "والمارت": "Walmart", "پروکتر اند گمبل": "Procter & Gamble",
+            "جانسون اند جانسون": "Johnson & Johnson", "مرک": "Merck", "اب‌وی": "AbbVie",
+            "نایکی": "Nike", "استارباکس": "Starbucks", "اوبر": "Uber", "بوئینگ": "Boeing"
+        }
+    };
+
+    function translateName(name) {
+        if (currentLang === 'fa') return name;
+        return stockNames.en[name] || name;
+    }
+
+    // ==================== داده‌های کامل ۱۲۰ تایی ====================
+    const cryptoData = [
+        { id: 1, name: "بیت‌کوین", symbol: "BTC", price: 77500, change: -1.2, icon: "₿", color: "#f7931a", pred: -0.8, marketCap: "1.23T", volume: "26.5B", high: 78500, low: 76500 },
+        { id: 2, name: "اتریوم", symbol: "ETH", price: 2850, change: -0.5, icon: "Ξ", color: "#627eea", pred: -0.2, marketCap: "342B", volume: "11.8B", high: 2900, low: 2800 },
+        { id: 3, name: "تتر", symbol: "USDT", price: 1.00, change: 0.01, icon: "₮", color: "#26a17b", pred: 0.0, marketCap: "110B", volume: "45.2B", high: 1.01, low: 0.99 },
+        { id: 4, name: "بی ان بی", symbol: "BNB", price: 495, change: -0.8, icon: "⍟", color: "#f3ba2f", pred: -0.5, marketCap: "76B", volume: "1.4B", high: 505, low: 485 },
+        { id: 5, name: "سولانا", symbol: "SOL", price: 138, change: 2.1, icon: "◎", color: "#00ffbd", pred: 2.8, marketCap: "62B", volume: "2.3B", high: 142, low: 134 },
+        { id: 6, name: "ریپل", symbol: "XRP", price: 0.48, change: -0.9, icon: "✕", color: "#1e2a5e", pred: -0.6, marketCap: "26B", volume: "1.0B", high: 0.49, low: 0.47 },
+        { id: 7, name: "کاردانو", symbol: "ADA", price: 0.35, change: 0.3, icon: "₳", color: "#3264c8", pred: 0.5, marketCap: "12.5B", volume: "0.32B", high: 0.36, low: 0.34 },
+        { id: 8, name: "دوج کوین", symbol: "DOGE", price: 0.112, change: -1.5, icon: "Ð", color: "#c2a633", pred: -1.8, marketCap: "16.2B", volume: "0.95B", high: 0.115, low: 0.109 },
+        { id: 9, name: "ترون", symbol: "TRX", price: 0.102, change: 0.5, icon: "🌀", color: "#ff0000", pred: 0.7, marketCap: "8.9B", volume: "0.55B", high: 0.104, low: 0.100 },
+        { id: 10, name: "آوالانچ", symbol: "AVAX", price: 32.5, change: -2.1, icon: "❄️", color: "#e84142", pred: -2.5, marketCap: "12.2B", volume: "0.42B", high: 33.5, low: 31.5 },
+        { id: 11, name: "پولکادات", symbol: "DOT", price: 6.10, change: -1.0, icon: "◈", color: "#e6007a", pred: -1.2, marketCap: "7.6B", volume: "0.25B", high: 6.30, low: 5.90 },
+        { id: 12, name: "لایت کوین", symbol: "LTC", price: 68.50, change: 0.3, icon: "Ł", color: "#b3b3b3", pred: 0.5, marketCap: "5.1B", volume: "0.32B", high: 69.50, low: 67.50 },
+        { id: 13, name: "چین لینک", symbol: "LINK", price: 13.80, change: 0.8, icon: "🔗", color: "#2a5c9a", pred: 1.1, marketCap: "8.1B", volume: "0.38B", high: 14.10, low: 13.50 },
+        { id: 14, name: "یونی سواپ", symbol: "UNI", price: 6.80, change: -0.2, icon: "🦄", color: "#ff007a", pred: 0.0, marketCap: "5.1B", volume: "0.18B", high: 6.90, low: 6.70 },
+        { id: 15, name: "اتمیوم", symbol: "ATOM", price: 8.90, change: 1.2, icon: "⚛️", color: "#2c3e50", pred: 1.5, marketCap: "3.5B", volume: "0.14B", high: 9.10, low: 8.70 },
+        { id: 16, name: "الگوراند", symbol: "ALGO", price: 0.165, change: -0.5, icon: "🔷", color: "#000000", pred: -0.3, marketCap: "1.35B", volume: "0.08B", high: 0.168, low: 0.162 },
+        { id: 17, name: "وی چین", symbol: "VET", price: 0.023, change: 0.7, icon: "✅", color: "#2ecc71", pred: 1.0, marketCap: "1.68B", volume: "0.07B", high: 0.024, low: 0.022 },
+        { id: 18, name: "استلار", symbol: "XLM", price: 0.092, change: -0.2, icon: "⭐", color: "#000000", pred: -0.1, marketCap: "2.65B", volume: "0.15B", high: 0.094, low: 0.090 },
+        { id: 19, name: "تزوس", symbol: "XTZ", price: 0.86, change: -0.4, icon: "🥖", color: "#2c3e50", pred: -0.2, marketCap: "0.86B", volume: "0.04B", high: 0.88, low: 0.84 },
+        { id: 20, name: "انیگرام", symbol: "NEAR", price: 4.85, change: 1.8, icon: "⏺️", color: "#00c4b3", pred: 2.3, marketCap: "5.2B", volume: "0.28B", high: 5.00, low: 4.70 }
+    ];
+
+    const stockData = [
+        { id: 101, name: "فولاد مبارکه", symbol: "فولاد", price: 4850, change: 2.3, icon: "🏭", color: "#3498db", pred: 3.1, eps: 520, pe: 9.3, volume: "12.5M", high: 4950, low: 4750 },
+        { id: 102, name: "خلیج فارس", symbol: "فارس", price: 3620, change: 1.8, icon: "🛢️", color: "#2ecc71", pred: 2.5, eps: 410, pe: 8.8, volume: "8.9M", high: 3700, low: 3540 },
+        { id: 103, name: "ملی مس", symbol: "فملی", price: 2850, change: -1.2, icon: "⛏️", color: "#e74c3c", pred: -1.8, eps: 310, pe: 9.2, volume: "5.6M", high: 2920, low: 2780 },
+        { id: 104, name: "وامید", symbol: "وامید", price: 1250, change: 3.5, icon: "🏦", color: "#3498db", pred: 4.2, eps: 145, pe: 8.6, volume: "18.7M", high: 1290, low: 1210 },
+        { id: 105, name: "بانک ملت", symbol: "وبملت", price: 1890, change: -2.1, icon: "🏛️", color: "#e74c3c", pred: -2.3, eps: 210, pe: 9.0, volume: "34.2M", high: 1950, low: 1830 },
+        { id: 106, name: "پارس خودرو", symbol: "خپارس", price: 3240, change: 4.2, icon: "🚗", color: "#2ecc71", pred: 5.0, eps: 380, pe: 8.5, volume: "9.3M", high: 3350, low: 3130 },
+        { id: 107, name: "سایپا", symbol: "سایپا", price: 2150, change: -0.8, icon: "🚘", color: "#e74c3c", pred: -1.1, eps: 245, pe: 8.8, volume: "15.6M", high: 2200, low: 2100 },
+        { id: 108, name: "گل گهر", symbol: "کگل", price: 4280, change: 1.5, icon: "⛰️", color: "#3498db", pred: 2.2, eps: 490, pe: 8.7, volume: "7.8M", high: 4350, low: 4210 },
+        { id: 109, name: "مخابرات ایران", symbol: "اخابر", price: 1430, change: -1.7, icon: "📡", color: "#e74c3c", pred: -2.0, eps: 165, pe: 8.7, volume: "12.1M", high: 1480, low: 1380 },
+        { id: 110, name: "پالایش نفت اصفهان", symbol: "شپنا", price: 5180, change: 2.8, icon: "⛽", color: "#2ecc71", pred: 3.5, eps: 590, pe: 8.8, volume: "14.5M", high: 5300, low: 5060 },
+        { id: 111, name: "کشتیرانی", symbol: "حکشتی", price: 2670, change: 3.2, icon: "🚢", color: "#2ecc71", pred: 3.8, eps: 305, pe: 8.8, volume: "8.9M", high: 2750, low: 2590 },
+        { id: 112, name: "سیمان فارس", symbol: "سفارس", price: 1980, change: -0.5, icon: "🏗️", color: "#e74c3c", pred: -0.8, eps: 225, pe: 8.8, volume: "6.7M", high: 2020, low: 1940 },
+        { id: 113, name: "ایران خودرو", symbol: "خودرو", price: 2750, change: 1.2, icon: "🚙", color: "#3498db", pred: 1.5, eps: 290, pe: 9.5, volume: "22.3M", high: 2820, low: 2680 },
+        { id: 114, name: "بیمه ایران", symbol: "بایران", price: 1850, change: -0.9, icon: "🛡️", color: "#e74c3c", pred: -1.2, eps: 195, pe: 9.5, volume: "5.2M", high: 1890, low: 1810 },
+        { id: 115, name: "پتروشیمی جم", symbol: "پجم", price: 4250, change: 2.1, icon: "🧪", color: "#2ecc71", pred: 2.8, eps: 480, pe: 8.9, volume: "3.8M", high: 4350, low: 4150 },
+        { id: 116, name: "ذوب آهن", symbol: "ذوب", price: 1650, change: -1.5, icon: "⚙️", color: "#e74c3c", pred: -1.9, eps: 175, pe: 9.4, volume: "9.4M", high: 1700, low: 1600 },
+        { id: 117, name: "دارویی برکت", symbol: "دبرکت", price: 2250, change: 0.7, icon: "💊", color: "#3498db", pred: 1.0, eps: 240, pe: 9.4, volume: "4.1M", high: 2300, low: 2200 },
+        { id: 118, name: "کاشی الوند", symbol: "کالوند", price: 1850, change: -0.3, icon: "🪙", color: "#e74c3c", pred: -0.5, eps: 195, pe: 9.5, volume: "2.3M", high: 1880, low: 1820 },
+        { id: 119, name: "آذرآب", symbol: "آذر", price: 1450, change: 1.9, icon: "💧", color: "#2ecc71", pred: 2.2, eps: 155, pe: 9.4, volume: "1.8M", high: 1500, low: 1400 },
+        { id: 120, name: "پتروشیمی تندگویان", symbol: "نتندی", price: 3950, change: -0.4, icon: "⛽", color: "#e74c3c", pred: -0.7, eps: 420, pe: 9.4, volume: "2.9M", high: 4020, low: 3880 }
+    ];
+
+    const metalsData = [
+        { id: 201, name: "طلای ۱۸ عیار", symbol: "طلا", price: 16800000, change: 1.8, icon: "🥇", color: "#fbb034", pred: 2.2, unit: "گرمی", high: 16950000, low: 16650000, volume: "2.5B" },
+        { id: 202, name: "طلای جهانی", symbol: "XAU", price: 4050, change: 2.1, icon: "🏅", color: "#f7931a", pred: 2.8, unit: "دلار/اونس", high: 4080, low: 4020, volume: "85.2B" },
+        { id: 203, name: "نقره جهانی", symbol: "XAG", price: 48.5, change: -1.2, icon: "🥈", color: "#c0c0c0", pred: -1.6, unit: "دلار/اونس", high: 49.0, low: 48.0, volume: "12.1B" },
+        { id: 204, name: "پلاتین", symbol: "PLAT", price: 1680, change: 0.8, icon: "🔘", color: "#bdc3c7", pred: 1.0, unit: "دلار/اونس", high: 1695, low: 1665, volume: "0.5B" },
+        { id: 205, name: "مس", symbol: "CU", price: 15500, change: 1.5, icon: "🔴", color: "#e74c3c", pred: 2.0, unit: "دلار/تن", high: 15650, low: 15350, volume: "22.1B" },
+        { id: 206, name: "آلومینیوم", symbol: "AL", price: 3850, change: 0.5, icon: "🔘", color: "#bdc3c7", pred: 0.7, unit: "دلار/تن", high: 3870, low: 3830, volume: "18.3B" },
+        { id: 207, name: "روی", symbol: "ZN", price: 4450, change: -0.2, icon: "⚙️", color: "#7f8c8d", pred: 0.0, unit: "دلار/تن", high: 4470, low: 4430, volume: "12.5B" },
+        { id: 208, name: "نیکل", symbol: "NI", price: 29500, change: -0.8, icon: "🔘", color: "#95a5a6", pred: -0.5, unit: "دلار/تن", high: 29700, low: 29300, volume: "8.2B" },
+        { id: 209, name: "سرب", symbol: "PB", price: 3450, change: 0.3, icon: "⚫", color: "#34495e", pred: 0.5, unit: "دلار/تن", high: 3470, low: 3430, volume: "6.1B" },
+        { id: 210, name: "قلع", symbol: "SN", price: 53000, change: 1.0, icon: "🔘", color: "#bdc3c7", pred: 1.3, unit: "دلار/تن", high: 53200, low: 52800, volume: "3.2B" },
+        { id: 211, name: "کبالت", symbol: "CO", price: 48500, change: 0.2, icon: "🔵", color: "#2980b9", pred: 0.4, unit: "دلار/تن", high: 48700, low: 48300, volume: "1.8B" },
+        { id: 212, name: "لیتیوم", symbol: "LI", price: 22000, change: -1.5, icon: "🔋", color: "#2ecc71", pred: -1.2, unit: "دلار/تن", high: 22200, low: 21800, volume: "4.5B" },
+        { id: 213, name: "سکه امامی", symbol: "سکه", price: 68000000, change: 1.5, icon: "🪙", color: "#f39c12", pred: 2.0, unit: "تومان", high: 68500000, low: 67500000, volume: "0.8B" },
+        { id: 214, name: "نیم سکه", symbol: "نیم سکه", price: 35000000, change: 1.2, icon: "🪙", color: "#e67e22", pred: 1.6, unit: "تومان", high: 35300000, low: 34700000, volume: "0.4B" },
+        { id: 215, name: "ربع سکه", symbol: "ربع سکه", price: 18500000, change: 1.0, icon: "🪙", color: "#d35400", pred: 1.3, unit: "تومان", high: 18650000, low: 18350000, volume: "0.3B" },
+        { id: 216, name: "گرم طلا", symbol: "گرم طلا", price: 1680000, change: 1.8, icon: "✨", color: "#f1c40f", pred: 2.2, unit: "تومان", high: 1695000, low: 1665000, volume: "2.1B" },
+        { id: 217, name: "پالادیوم", symbol: "PALL", price: 1780, change: 0.5, icon: "⚪", color: "#95a5a6", pred: 0.7, unit: "دلار/اونس", high: 1795, low: 1765, volume: "0.3B" },
+        { id: 218, name: "تیتانیوم", symbol: "TI", price: 8.2, change: 0.3, icon: "🔘", color: "#7f8c8d", pred: 0.4, unit: "دلار/کیلو", high: 8.3, low: 8.1, volume: "2.1B" },
+        { id: 219, name: "اورانیوم", symbol: "U", price: 82, change: -0.5, icon: "☢️", color: "#e74c3c", pred: -0.3, unit: "دلار/پوند", high: 83, low: 81, volume: "0.9B" },
+        { id: 220, name: "منگنز", symbol: "MN", price: 7.8, change: 0.4, icon: "🔘", color: "#95a5a6", pred: 0.6, unit: "دلار/کیلو", high: 7.9, low: 7.7, volume: "1.2B" }
+    ];
+
+    const currencyData = [
+        { id: 301, name: "دلار آمریکا", symbol: "USD", price: 170000, change: 2.5, icon: "💵", color: "#2ecc71", pred: 3.0, unit: "تومان", high: 171500, low: 168500, volume: "50B" },
+        { id: 302, name: "یورو", symbol: "EUR", price: 182000, change: 2.1, icon: "💶", color: "#3498db", pred: 2.5, unit: "تومان", high: 183500, low: 180500, volume: "45B" },
+        { id: 303, name: "پوند انگلیس", symbol: "GBP", price: 215000, change: -1.8, icon: "💷", color: "#e74c3c", pred: -2.2, unit: "تومان", high: 217000, low: 213000, volume: "40B" },
+        { id: 304, name: "درهم امارات", symbol: "AED", price: 46300, change: 1.5, icon: "🇦🇪", color: "#1abc9c", pred: 1.8, unit: "تومان", high: 46700, low: 45900, volume: "15B" },
+        { id: 305, name: "لیر ترکیه", symbol: "TRY", price: 5200, change: -0.5, icon: "🇹🇷", color: "#e67e22", pred: -0.8, unit: "تومان", high: 5250, low: 5150, volume: "8B" },
+        { id: 306, name: "دلار کانادا", symbol: "CAD", price: 125000, change: 0.8, icon: "🇨🇦", color: "#e74c3c", pred: 1.0, unit: "تومان", high: 126000, low: 124000, volume: "12B" },
+        { id: 307, name: "دلار استرالیا", symbol: "AUD", price: 112000, change: 0.6, icon: "🇦🇺", color: "#3498db", pred: 0.8, unit: "تومان", high: 113000, low: 111000, volume: "10B" },
+        { id: 308, name: "فرانک سوئیس", symbol: "CHF", price: 190000, change: -0.3, icon: "🇨🇭", color: "#2980b9", pred: -0.5, unit: "تومان", high: 191500, low: 188500, volume: "7B" },
+        { id: 309, name: "یوان چین", symbol: "CNY", price: 23500, change: 0.4, icon: "🇨🇳", color: "#e74c3c", pred: 0.6, unit: "تومان", high: 23700, low: 23300, volume: "20B" },
+        { id: 310, name: "روپیه هند", symbol: "INR", price: 2050, change: 0.2, icon: "🇮🇳", color: "#f39c12", pred: 0.3, unit: "تومان", high: 2070, low: 2030, volume: "5B" },
+        { id: 311, name: "وون کره", symbol: "KRW", price: 125, change: 0.1, icon: "🇰🇷", color: "#3498db", pred: 0.2, unit: "تومان", high: 126, low: 124, volume: "3B" },
+        { id: 312, name: "دلار سنگاپور", symbol: "SGD", price: 126000, change: 0.5, icon: "🇸🇬", color: "#e74c3c", pred: 0.7, unit: "تومان", high: 127000, low: 125000, volume: "6B" },
+        { id: 313, name: "ریال قطر", symbol: "QAR", price: 46700, change: 0.3, icon: "🇶🇦", color: "#1abc9c", pred: 0.4, unit: "تومان", high: 47000, low: 46400, volume: "4B" },
+        { id: 314, name: "دینار عراق", symbol: "IQD", price: 130, change: -0.2, icon: "🇮🇶", color: "#27ae60", pred: -0.3, unit: "تومان", high: 131, low: 129, volume: "2B" },
+        { id: 315, name: "روبل روسیه", symbol: "RUB", price: 1850, change: -0.8, icon: "🇷🇺", color: "#e74c3c", pred: -1.0, unit: "تومان", high: 1870, low: 1830, volume: "6B" },
+        { id: 316, name: "ین ژاپن", symbol: "JPY", price: 1100, change: 0.2, icon: "🇯🇵", color: "#e74c3c", pred: 0.3, unit: "تومان", high: 1110, low: 1090, volume: "8B" },
+        { id: 317, name: "دلار نیوزیلند", symbol: "NZD", price: 103000, change: 0.4, icon: "🇳🇿", color: "#3498db", pred: 0.6, unit: "تومان", high: 104000, low: 102000, volume: "5B" },
+        { id: 318, name: "رینگیت مالزی", symbol: "MYR", price: 36000, change: 0.2, icon: "🇲🇾", color: "#2ecc71", pred: 0.3, unit: "تومان", high: 36300, low: 35700, volume: "4B" },
+        { id: 319, name: "بات تایلند", symbol: "THB", price: 4700, change: 0.1, icon: "🇹🇭", color: "#e74c3c", pred: 0.2, unit: "تومان", high: 4750, low: 4650, volume: "3B" },
+        { id: 320, name: "دینار کویت", symbol: "KWD", price: 555000, change: 0.3, icon: "🇰🇼", color: "#27ae60", pred: 0.4, unit: "تومان", high: 558000, low: 552000, volume: "2B" }
+    ];
+
+    const energyData = [
+        { id: 401, name: "نفت خام برنت", symbol: "BRENT", price: 85.5, change: 1.2, icon: "🛢️", color: "#2c3e50", pred: 1.5, unit: "دلار/بشکه", high: 86.2, low: 84.8, volume: "250M" },
+        { id: 402, name: "نفت خام WTI", symbol: "WTI", price: 81.2, change: 1.0, icon: "🛢️", color: "#34495e", pred: 1.3, unit: "دلار/بشکه", high: 81.9, low: 80.5, volume: "180M" },
+        { id: 403, name: "گاز طبیعی", symbol: "NG", price: 2.85, change: -0.8, icon: "🔥", color: "#3498db", pred: -0.5, unit: "دلار/ممیلیون BTU", high: 2.90, low: 2.80, volume: "120M" },
+        { id: 404, name: "بنزین", symbol: "GAS", price: 2.65, change: 0.5, icon: "⛽", color: "#e67e22", pred: 0.7, unit: "دلار/گالن", high: 2.68, low: 2.62, volume: "95M" },
+        { id: 405, name: "نفت کوره", symbol: "FO", price: 520, change: 0.8, icon: "🏭", color: "#7f8c8d", pred: 1.0, unit: "دلار/تن", high: 525, low: 515, volume: "45M" },
+        { id: 406, name: "گازوئیل", symbol: "DIESEL", price: 3.15, change: 0.6, icon: "🚚", color: "#f39c12", pred: 0.8, unit: "دلار/گالن", high: 3.18, low: 3.12, volume: "78M" },
+        { id: 407, name: "پروپان", symbol: "PRO", price: 0.95, change: -0.3, icon: "💨", color: "#95a5a6", pred: -0.1, unit: "دلار/گالن", high: 0.96, low: 0.94, volume: "32M" },
+        { id: 408, name: "اتان", symbol: "ETHN", price: 0.42, change: 0.2, icon: "🧪", color: "#1abc9c", pred: 0.3, unit: "دلار/گالن", high: 0.43, low: 0.41, volume: "28M" },
+        { id: 409, name: "متان", symbol: "MET", price: 0.38, change: -0.1, icon: "💨", color: "#bdc3c7", pred: 0.0, unit: "دلار/گالن", high: 0.39, low: 0.37, volume: "25M" },
+        { id: 410, name: "زغال سنگ", symbol: "COAL", price: 145, change: -1.2, icon: "⚫", color: "#2c3e50", pred: -1.0, unit: "دلار/تن", high: 147, low: 143, volume: "85M" },
+        { id: 411, name: "اورانیوم", symbol: "URAN", price: 82, change: -0.5, icon: "☢️", color: "#e74c3c", pred: -0.3, unit: "دلار/پوند", high: 83, low: 81, volume: "0.9B" },
+        { id: 412, name: "هیدروژن", symbol: "H2", price: 5.2, change: 1.5, icon: "💧", color: "#00c4b3", pred: 1.8, unit: "دلار/کیلو", high: 5.3, low: 5.1, volume: "15M" },
+        { id: 413, name: "بیودیزل", symbol: "BIO", price: 4.8, change: 0.4, icon: "🌿", color: "#2ecc71", pred: 0.6, unit: "دلار/گالن", high: 4.85, low: 4.75, volume: "22M" },
+        { id: 414, name: "اتانول", symbol: "ETHO", price: 2.25, change: 0.3, icon: "🌽", color: "#f1c40f", pred: 0.5, unit: "دلار/گالن", high: 2.28, low: 2.22, volume: "35M" },
+        { id: 415, name: "نفت سفید", symbol: "KERO", price: 3.45, change: 0.7, icon: "✈️", color: "#3498db", pred: 0.9, unit: "دلار/گالن", high: 3.48, low: 3.42, volume: "42M" },
+        { id: 416, name: "بیوتان", symbol: "BUT", price: 0.88, change: -0.2, icon: "💨", color: "#95a5a6", pred: 0.0, unit: "دلار/گالن", high: 0.89, low: 0.87, volume: "20M" },
+        { id: 417, name: "نفتا", symbol: "NAP", price: 620, change: 0.9, icon: "🧪", color: "#e67e22", pred: 1.1, unit: "دلار/تن", high: 625, low: 615, volume: "38M" },
+        { id: 418, name: "آسفالت", symbol: "ASPH", price: 480, change: 0.3, icon: "🛣️", color: "#7f8c8d", pred: 0.5, unit: "دلار/تن", high: 485, low: 475, volume: "30M" },
+        { id: 419, name: "ال‌پی‌جی", symbol: "LPG", price: 0.72, change: 0.1, icon: "🔥", color: "#f39c12", pred: 0.2, unit: "دلار/گالن", high: 0.73, low: 0.71, volume: "55M" },
+        { id: 420, name: "نفت سنگین", symbol: "HFO", price: 480, change: -0.6, icon: "🛢️", color: "#2c3e50", pred: -0.4, unit: "دلار/تن", high: 485, low: 475, volume: "40M" }
+    ];
+
+    const usStocksData = [
+        { id: 501, name: "اپل", symbol: "AAPL", price: 178.50, change: 0.8, icon: "🍎", color: "#555555", pred: 1.2, marketCap: "2.8T", volume: "58M", high: 180.50, low: 176.00 },
+        { id: 502, name: "گوگل", symbol: "GOOGL", price: 141.20, change: 1.1, icon: "🔍", color: "#4285f4", pred: 1.5, marketCap: "1.8T", volume: "28M", high: 143.00, low: 139.50 },
+        { id: 503, name: "مایکروسافت", symbol: "MSFT", price: 378.90, change: 0.5, icon: "💻", color: "#00a4ef", pred: 0.8, marketCap: "2.9T", volume: "22M", high: 382.00, low: 375.00 },
+        { id: 504, name: "آمازون", symbol: "AMZN", price: 185.30, change: -0.3, icon: "📦", color: "#ff9900", pred: -0.5, marketCap: "1.9T", volume: "35M", high: 187.00, low: 183.50 },
+        { id: 505, name: "تسلا", symbol: "TSLA", price: 245.60, change: 2.3, icon: "🚗", color: "#cc0000", pred: 3.0, marketCap: "0.8T", volume: "42M", high: 250.00, low: 241.00 },
+        { id: 506, name: "متا", symbol: "META", price: 505.90, change: 1.7, icon: "📱", color: "#1877f2", pred: 2.1, marketCap: "1.3T", volume: "18M", high: 512.00, low: 499.00 },
+        { id: 507, name: "نتفلیکس", symbol: "NFLX", price: 625.40, change: -0.8, icon: "🎬", color: "#e50914", pred: -1.0, marketCap: "0.27T", volume: "8M", high: 632.00, low: 618.00 },
+        { id: 508, name: "انویدیا", symbol: "NVDA", price: 875.20, change: 3.2, icon: "💠", color: "#76b900", pred: 4.0, marketCap: "2.1T", volume: "45M", high: 890.00, low: 860.00 },
+        { id: 509, name: "کوکاکولا", symbol: "KO", price: 62.80, change: 0.2, icon: "🥤", color: "#ff0000", pred: 0.3, marketCap: "0.27T", volume: "12M", high: 63.50, low: 62.00 },
+        { id: 510, name: "مک‌دونالد", symbol: "MCD", price: 298.50, change: 0.4, icon: "🍔", color: "#da291c", pred: 0.6, marketCap: "0.21T", volume: "5M", high: 301.00, low: 296.00 },
+        { id: 511, name: "پپسی", symbol: "PEP", price: 172.80, change: 0.3, icon: "🥤", color: "#003da5", pred: 0.5, marketCap: "0.24T", volume: "6M", high: 174.50, low: 171.00 },
+        { id: 512, name: "والمارت", symbol: "WMT", price: 165.40, change: 0.6, icon: "🛒", color: "#0071ce", pred: 0.8, marketCap: "0.44T", volume: "8M", high: 167.00, low: 163.50 },
+        { id: 513, name: "پروکتر اند گمبل", symbol: "PG", price: 162.20, change: 0.1, icon: "🧴", color: "#003da5", pred: 0.2, marketCap: "0.38T", volume: "5M", high: 163.50, low: 160.50 },
+        { id: 514, name: "جانسون اند جانسون", symbol: "JNJ", price: 158.90, change: -0.2, icon: "💊", color: "#e6002a", pred: -0.3, marketCap: "0.38T", volume: "6M", high: 160.00, low: 157.50 },
+        { id: 515, name: "مرک", symbol: "MRK", price: 128.70, change: 0.4, icon: "🧬", color: "#0071ce", pred: 0.6, marketCap: "0.33T", volume: "7M", high: 130.00, low: 127.00 },
+        { id: 516, name: "اب‌وی", symbol: "ABBV", price: 178.40, change: 0.7, icon: "🧪", color: "#8a1b3d", pred: 0.9, marketCap: "0.31T", volume: "5M", high: 180.00, low: 176.50 },
+        { id: 517, name: "نایکی", symbol: "NKE", price: 94.80, change: -0.5, icon: "👟", color: "#000000", pred: -0.7, marketCap: "0.14T", volume: "9M", high: 96.00, low: 93.50 },
+        { id: 518, name: "استارباکس", symbol: "SBUX", price: 95.60, change: 0.9, icon: "☕", color: "#006241", pred: 1.2, marketCap: "0.11T", volume: "7M", high: 97.00, low: 94.00 },
+        { id: 519, name: "اوبر", symbol: "UBER", price: 78.40, change: 1.5, icon: "🚕", color: "#000000", pred: 1.8, marketCap: "0.16T", volume: "15M", high: 79.50, low: 77.00 },
+        { id: 520, name: "بوئینگ", symbol: "BA", price: 185.20, change: -1.2, icon: "✈️", color: "#003da5", pred: -1.5, marketCap: "0.11T", volume: "6M", high: 188.00, low: 182.00 }
+    ];
+
+    let currentMarket = "overview";
+    let currentFilter = "all";
+    let searchText = "";
+    let deferredPrompt;
+    let chartInstances = {};
+    let modalCharts = {};
+
+    function getCurrentData() {
+        if(currentMarket === "crypto") return cryptoData;
+        if(currentMarket === "stock") return stockData;
+        if(currentMarket === "metals") return metalsData;
+        if(currentMarket === "currency") return currencyData;
+        if(currentMarket === "energy") return energyData;
+        if(currentMarket === "us_stocks") return usStocksData;
+        return [];
+    }
+
+    function formatPrice(price) {
+        if(price < 1) return price.toFixed(4);
+        if(price < 10) return price.toFixed(3);
+        if(price < 1000) return price.toFixed(2);
+        return Math.floor(price).toLocaleString();
+    }
+
+    function getPredictionText(pred) {
+        if(pred > 1.5) {
+            if(currentLang === 'en') return "📈 Strong Up (+" + pred.toFixed(1) + "%)";
+            return "📈 صعود قوی (+" + pred.toFixed(1) + "%)";
+        }
+        if(pred > 0.5) {
+            if(currentLang === 'en') return "📈 Mild Up (+" + pred.toFixed(1) + "%)";
+            return "📈 صعود ملایم (+" + pred.toFixed(1) + "%)";
+        }
+        if(pred < -1.5) {
+            if(currentLang === 'en') return "📉 Strong Down (" + pred.toFixed(1) + "%)";
+            return "📉 نزول شدید (" + pred.toFixed(1) + "%)";
+        }
+        if(pred < -0.5) {
+            if(currentLang === 'en') return "📉 Mild Down (" + pred.toFixed(1) + "%)";
+            return "📉 نزول ملایم (" + pred.toFixed(1) + "%)";
+        }
+        if(currentLang === 'en') return "➖ Neutral (" + (pred > 0 ? '+' : '') + pred.toFixed(1) + "%)";
+        return "➖ نوسان (" + (pred > 0 ? '+' : '') + pred.toFixed(1) + "%)";
+    }
+
+    // ==================== تولید داده نوسان ====================
+    function generatePriceData(item, days = 60) {
+        const seed = item.symbol.split('').reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
+        let state = seed;
+        function random() {
+            state = (state * 9301 + 49297) % 233280;
+            return state / 233280;
+        }
+        
+        const basePrice = item.price * 0.85;
+        const dates = [];
+        const prices = [];
+        const volumes = [];
+        
+        let price = basePrice;
+        const now = new Date();
+        const changeFactor = item.change / 100;
+        
+        for (let i = days; i >= 0; i--) {
+            const date = new Date(now);
+            date.setDate(date.getDate() - i);
+            if (date.getDay() === 0 || date.getDay() === 6) continue;
+            
+            const ch = (random() - 0.45) * 0.035 + changeFactor * 0.25;
+            price = Math.max(price * (1 + ch), 1);
+            
+            dates.push(date.toISOString().split('T')[0]);
+            prices.push(price);
+            volumes.push(Math.floor(random() * 10000000 + 100000));
+        }
+        return { dates, prices, volumes };
+    }
+
+    // ==================== محاسبه RSI ====================
+    function calculateRSI(prices, period = 14) {
+        const rsi = [];
+        for (let i = period; i < prices.length; i++) {
+            let gain = 0, loss = 0;
+            for (let j = i - period + 1; j <= i; j++) {
+                const diff = prices[j] - prices[j-1];
+                if (diff >= 0) gain += diff;
+                else loss += Math.abs(diff);
+            }
+            const avgGain = gain / period;
+            const avgLoss = loss / period;
+            const rs = avgLoss === 0 ? 100 : avgGain / avgLoss;
+            rsi.push(100 - (100 / (1 + rs)));
+        }
+        return rsi;
+    }
+
+    // ==================== رسم نمودار خطی در کارت ====================
+    function renderCardChart(canvasId, item) {
+        const ctx = document.getElementById(canvasId);
+        if (!ctx) return;
+        
+        if (chartInstances[canvasId]) {
+            chartInstances[canvasId].destroy();
+            delete chartInstances[canvasId];
+        }
+        
+        const data = generatePriceData(item, 40);
+        if (data.dates.length < 5) return;
+        
+        const color = item.change >= 0 ? '#2ed573' : '#ff6b6b';
+        const gradient = ctx.getContext('2d').createLinearGradient(0, 0, 0, 80);
+        gradient.addColorStop(0, color + '40');
+        gradient.addColorStop(1, color + '00');
+        
+        try {
+            const chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.dates,
+                    datasets: [{
+                        label: 'قیمت',
+                        data: data.prices,
+                        borderColor: color,
+                        backgroundColor: gradient,
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: false }
+                    },
+                    scales: {
+                        x: { display: false, grid: { display: false } },
+                        y: { display: false, grid: { display: false } }
+                    }
+                }
+            });
+            chartInstances[canvasId] = chart;
+        } catch(e) {}
+    }
+
+    // ==================== رسم نمودارهای مودال ====================
+    function renderModalCharts(item) {
+        const data = generatePriceData(item, 60);
+        if (data.dates.length < 5) return;
+        
+        const color = item.change >= 0 ? '#2ed573' : '#ff6b6b';
+        
+        // ===== نمودار خطی قیمت =====
+        const lineCtx = document.getElementById('modalLineChart');
+        if (modalCharts.line) { modalCharts.line.destroy(); }
+        
+        const gradient = lineCtx.getContext('2d').createLinearGradient(0, 0, 0, 200);
+        gradient.addColorStop(0, color + '50');
+        gradient.addColorStop(1, color + '00');
+        
+        modalCharts.line = new Chart(lineCtx, {
+            type: 'line',
+            data: {
+                labels: data.dates,
+                datasets: [{
+                    label: 'قیمت',
+                    data: data.prices,
+                    borderColor: color,
+                    backgroundColor: gradient,
+                    borderWidth: 2.5,
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 2,
+                    pointBackgroundColor: color,
+                    pointBorderColor: '#0a0c12',
+                    pointBorderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return 'قیمت: ' + context.parsed.y.toFixed(2);
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { maxTicksLimit: 15, color: '#8e9aaf', font: { size: 8 } },
+                        grid: { display: false }
+                    },
+                    y: {
+                        position: 'right',
+                        ticks: { color: '#8e9aaf', font: { size: 8 } },
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    }
+                }
+            }
+        });
+        
+        // ===== نمودار حجم =====
+        const volCtx = document.getElementById('modalVolumeChart');
+        if (modalCharts.volume) { modalCharts.volume.destroy(); }
+        
+        const volColors = data.prices.map((p, i) => {
+            if (i === 0) return '#8e9aaf';
+            return p >= data.prices[i-1] ? '#2ed573' : '#ff6b6b';
+        });
+        
+        modalCharts.volume = new Chart(volCtx, {
+            type: 'bar',
+            data: {
+                labels: data.dates,
+                datasets: [{
+                    label: 'حجم معاملات',
+                    data: data.volumes,
+                    backgroundColor: volColors,
+                    borderColor: volColors,
+                    borderWidth: 0,
+                    borderRadius: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return 'حجم: ' + (context.parsed.y / 1000000).toFixed(1) + 'M';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: { display: false },
+                    y: {
+                        position: 'right',
+                        ticks: { color: '#8e9aaf', font: { size: 8 }, callback: function(v) { return (v/1000000).toFixed(0)+'M'; } },
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    }
+                }
+            }
+        });
+        
+        // ===== نمودار RSI =====
+        const rsiCtx = document.getElementById('modalRSIChart');
+        if (modalCharts.rsi) { modalCharts.rsi.destroy(); }
+        
+        const rsiValues = calculateRSI(data.prices, 14);
+        const rsiLabels = data.dates.slice(14);
+        
+        modalCharts.rsi = new Chart(rsiCtx, {
+            type: 'line',
+            data: {
+                labels: rsiLabels,
+                datasets: [{
+                    label: 'RSI',
+                    data: rsiValues,
+                    borderColor: '#f6b93b',
+                    backgroundColor: 'rgba(246,185,59,0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return 'RSI: ' + context.parsed.y.toFixed(1);
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: { display: false },
+                    y: {
+                        min: 0,
+                        max: 100,
+                        position: 'right',
+                        ticks: { color: '#8e9aaf', font: { size: 8 } },
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    }
+                }
+            }
+        });
+        
+        // خطوط RSI روی کانوس
+        setTimeout(() => {
+            const canvas = rsiCtx;
+            const ctx2d = canvas.getContext('2d');
+            const chartArea = modalCharts.rsi.chartArea;
+            if (chartArea) {
+                ctx2d.save();
+                ctx2d.strokeStyle = '#ff6b6b';
+                ctx2d.setLineDash([5, 5]);
+                ctx2d.lineWidth = 1;
+                ctx2d.beginPath();
+                const y70 = chartArea.top + (chartArea.bottom - chartArea.top) * 0.3;
+                const y30 = chartArea.top + (chartArea.bottom - chartArea.top) * 0.7;
+                ctx2d.moveTo(chartArea.left, y70);
+                ctx2d.lineTo(chartArea.right, y70);
+                ctx2d.stroke();
+                ctx2d.beginPath();
+                ctx2d.moveTo(chartArea.left, y30);
+                ctx2d.lineTo(chartArea.right, y30);
+                ctx2d.stroke();
+                ctx2d.restore();
+            }
+        }, 200);
+    }
+
+    // ==================== آنالیزور ====================
+    function analyzeMarket(marketData, marketName) {
+        if(!marketData || marketData.length === 0) {
+            return { score: 0, verdict: currentLang === 'en' ? "No Data" : "داده‌ای وجود ندارد", confidence: currentLang === 'en' ? "Low" : "پایین", recommendation: currentLang === 'en' ? "⚪ No Data" : "⚪ بدون داده", emoji: "❓", details: { avgChange: "0", greenPercent: "0", totalVolume: "0", greens: 0, reds: 0 } };
+        }
+        const totalChange = marketData.reduce((sum, item) => sum + item.change, 0);
+        const avgChange = totalChange / marketData.length;
+        const greens = marketData.filter(item => item.change > 0).length;
+        const reds = marketData.filter(item => item.change < 0).length;
+        const greenPercent = (greens / marketData.length) * 100;
+        const totalVolume = marketData.reduce((sum, item) => sum + (parseFloat(item.volume) || 0), 0);
+        let score = 0;
+        if (avgChange > 0.5) score += 40;
+        else if (avgChange > 0) score += 20;
+        else if (avgChange < -0.5) score -= 40;
+        else if (avgChange < 0) score -= 20;
+        if (greenPercent > 60) score += 35;
+        else if (greenPercent > 50) score += 17;
+        else if (greenPercent < 40) score -= 35;
+        else if (greenPercent < 50) score -= 17;
+        if (totalVolume > 100) score += 25;
+        else if (totalVolume > 50) score += 12;
+        else if (totalVolume < 20) score -= 12;
+        else if (totalVolume < 10) score -= 25;
+        score = Math.min(100, Math.max(-100, score));
+        let verdictKey, confidence, recommendation, emoji;
+        if (score >= 60) { verdictKey = 'strongUp'; confidence = currentLang === 'en' ? "High" : "بالا"; recommendation = currentLang === 'en' ? "🟢 Buy/Hold" : "🟢 خرید/نگهداری"; emoji = "🚀🔥"; }
+        else if (score >= 30) { verdictKey = 'mildUp'; confidence = currentLang === 'en' ? "Medium" : "متوسط"; recommendation = currentLang === 'en' ? "🟡 Mild Buy" : "🟡 خرید ملایم"; emoji = "📈"; }
+        else if (score >= 10) { verdictKey = 'weakUp'; confidence = currentLang === 'en' ? "Low" : "پایین"; recommendation = currentLang === 'en' ? "⚪ Caution" : "⚪ احتیاط/تثبیت"; emoji = "➡️"; }
+        else if (score >= -10) { verdictKey = 'neutral'; confidence = currentLang === 'en' ? "Unknown" : "نامشخص"; recommendation = currentLang === 'en' ? "⚪ Wait" : "⚪ صبر کن"; emoji = "❓"; }
+        else if (score >= -30) { verdictKey = 'weakDown'; confidence = currentLang === 'en' ? "Low" : "پایین"; recommendation = currentLang === 'en' ? "🟡 Caution" : "🟡 احتیاط در خرید"; emoji = "📉"; }
+        else if (score >= -60) { verdictKey = 'mildDown'; confidence = currentLang === 'en' ? "Medium" : "متوسط"; recommendation = currentLang === 'en' ? "🔴 Sell" : "🔴 فروش/خروج"; emoji = "⚠️"; }
+        else { verdictKey = 'strongDown'; confidence = currentLang === 'en' ? "High" : "بالا"; recommendation = currentLang === 'en' ? "🔴 Urgent Sell" : "🔴 فروش فوری"; emoji = "💀🔥"; }
+        return { score, verdict: getText('analysisStatus.' + verdictKey), confidence, recommendation, emoji, details: { avgChange: avgChange.toFixed(2), greenPercent: greenPercent.toFixed(1), totalVolume: totalVolume.toFixed(1), greens, reds } };
+    }
+
+    function showAnalysis() {
+        const currentData = getCurrentData();
+        const marketName = currentMarket === "crypto" ? (currentLang === 'en' ? "Cryptocurrencies" : "رمزارزها") :
+                           currentMarket === "stock" ? (currentLang === 'en' ? "Iran Stocks" : "بورس ایران") :
+                           currentMarket === "metals" ? (currentLang === 'en' ? "Metals" : "فلزات") :
+                           currentMarket === "currency" ? (currentLang === 'en' ? "Forex" : "ارزها") :
+                           currentMarket === "energy" ? (currentLang === 'en' ? "Energy" : "انرژی") :
+                           currentMarket === "us_stocks" ? (currentLang === 'en' ? "US Stocks" : "سهام آمریکا") :
+                           (currentLang === 'en' ? "Market" : "بازار");
+        const analysis = analyzeMarket(currentData, marketName);
+        const modal = document.getElementById('analysisModal');
+        const modalBody = document.getElementById('analysisBody');
+        modalBody.innerHTML = `
+            <div style="text-align: center; margin-bottom: 1rem;">
+                <div style="font-size: 1rem; color: #8e9aaf;">${marketName}</div>
+                <div style="font-size: 2rem;">${analysis.emoji}</div>
+                <h3 style="color: #f6b93b;">${analysis.verdict}</h3>
+                <p>Score: ${analysis.score > 0 ? '+' : ''}${analysis.score}</p>
+            </div>
+            <div style="background: rgba(0,0,0,0.3); border-radius: 0.5rem; padding: 0.5rem; margin-bottom: 0.8rem;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.3rem;"><span>${currentLang === 'en' ? 'Avg Change:' : '📊 میانگین تغییرات:'}</span><span class="${analysis.details.avgChange >= 0 ? 'positive' : 'negative'}">${analysis.details.avgChange >= 0 ? '+' : ''}${analysis.details.avgChange}%</span></div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.3rem;"><span>${currentLang === 'en' ? 'Green Ratio:' : '🟢 نسبت سبزها:'}</span><span>${analysis.details.greenPercent}% (${analysis.details.greens} of ${analysis.details.greens + analysis.details.reds})</span></div>
+                <div style="display: flex; justify-content: space-between;"><span>${currentLang === 'en' ? 'Total Volume:' : '📦 حجم معاملات:'}</span><span>${analysis.details.totalVolume}</span></div>
+            </div>
+            <div style="background: rgba(52,152,219,0.2); border-radius: 0.5rem; padding: 0.5rem; text-align: center;">
+                <div style="font-size: 0.7rem; color: #8e9aaf;">${currentLang === 'en' ? 'Suggestion' : 'پیشنهاد'}</div>
+                <div style="font-weight: bold; font-size: 1rem;">${analysis.recommendation}</div>
+                <div style="font-size: 0.6rem; margin-top: 0.2rem;">${currentLang === 'en' ? 'Confidence' : 'اطمینان'}: ${analysis.confidence}</div>
+            </div>
+        `;
+        modal.classList.add('active');
+    }
+
+    // ==================== پیشنهاد خرید/فروش ====================
+    function getSuggestion(item) {
+        let score = 0, reasons = [];
+        if (item.change > 2) { score += 40; reasons.push(currentLang === 'en' ? "✅ Good price growth" : "✅ رشد قیمتی خوب"); }
+        else if (item.change > 0.5) { score += 20; reasons.push(currentLang === 'en' ? "✅ Mild growth" : "✅ رشد ملایم"); }
+        else if (item.change < -2) { score -= 40; reasons.push(currentLang === 'en' ? "❌ Sharp drop" : "❌ ریزش شدید قیمت"); }
+        else if (item.change < -0.5) { score -= 20; reasons.push(currentLang === 'en' ? "❌ Mild drop" : "❌ ریزش ملایم"); }
+        else { reasons.push(currentLang === 'en' ? "⚪ Consolidation" : "⚪ قیمت در حال تثبیت"); }
+        const pred = item.pred || 0;
+        if (pred > 1.5) { score += 30; reasons.push(currentLang === 'en' ? "🔮 Strong up prediction" : "🔮 پیش‌بینی صعود قوی"); }
+        else if (pred > 0.5) { score += 15; reasons.push(currentLang === 'en' ? "🔮 Mild up prediction" : "🔮 پیش‌بینی صعود ملایم"); }
+        else if (pred < -1.5) { score -= 30; reasons.push(currentLang === 'en' ? "📉 Strong down prediction" : "📉 پیش‌بینی نزول شدید"); }
+        else if (pred < -0.5) { score -= 15; reasons.push(currentLang === 'en' ? "📉 Mild down prediction" : "📉 پیش‌بینی نزول ملایم"); }
+        else { reasons.push(currentLang === 'en' ? "⚖️ Neutral prediction" : "⚖️ پیش‌بینی خنثی"); }
+        const vol = parseFloat(item.volume) || 0;
+        if (vol > 20) { score += 15; reasons.push(currentLang === 'en' ? "📊 High volume" : "📊 حجم معاملات بالا"); }
+        else if (vol > 10) { score += 8; reasons.push(currentLang === 'en' ? "📊 Medium volume" : "📊 حجم معاملات متوسط"); }
+        else if (vol < 5) { score -= 8; reasons.push(currentLang === 'en' ? "⚠️ Low volume" : "⚠️ حجم معاملات پایین"); }
+        if (item.pe && item.pe < 8) { score += 15; reasons.push(currentLang === 'en' ? "💎 Attractive P/E" : "💎 نسبت P/E جذاب"); }
+        else if (item.pe && item.pe > 12) { score -= 10; reasons.push(currentLang === 'en' ? "⚠️ High P/E" : "⚠️ نسبت P/E بالا"); }
+        let suggestionKey, suggestionClass, emoji;
+        if (score >= 40) { suggestionKey = 'strongBuy'; suggestionClass = "suggestion-buy"; emoji = "🚀"; }
+        else if (score >= 15) { suggestionKey = 'mildBuy'; suggestionClass = "suggestion-buy"; emoji = "📈"; }
+        else if (score >= -10) { suggestionKey = 'hold'; suggestionClass = "suggestion-hold"; emoji = "⏳"; }
+        else if (score >= -35) { suggestionKey = 'sell'; suggestionClass = "suggestion-sell"; emoji = "⚠️"; }
+        else { suggestionKey = 'urgentSell'; suggestionClass = "suggestion-sell"; emoji = "💀"; }
+        return { suggestion: currentLang === 'en' ? getText('suggestion.' + suggestionKey) : "🟢 " + getText('suggestion.' + suggestionKey), suggestionClass, emoji, score, reasons };
+    }
+
+    function showSuggestion(item) {
+        const suggestionBox = document.getElementById('suggestionBox');
+        const sugg = getSuggestion(item);
+        let reasonsHtml = '';
+        for (let r of sugg.reasons) {
+            reasonsHtml += `<div style="font-size:0.55rem; margin:0.15rem 0;">${r}</div>`;
+        }
+        suggestionBox.className = `suggestion-card ${sugg.suggestionClass}`;
+        suggestionBox.innerHTML = `
+            <div class="suggestion-title">${sugg.suggestion}</div>
+            <div style="font-size:0.65rem; margin:0.2rem 0;">${sugg.emoji} | Score: ${sugg.score > 0 ? '+' : ''}${sugg.score}</div>
+            <div class="suggestion-reason">${reasonsHtml}</div>
+        `;
+    }
+
+    // ==================== نمایش جزئیات ====================
+    function showDetails(id) {
+        const data = getCurrentData();
+        const item = data.find(i => i.id === id);
+        if(!item) return;
+        
+        const modal = document.getElementById('modal');
+        document.getElementById('modalTitle').innerHTML = translateName(item.name) + " (" + item.symbol + ")";
+        
+        const changeClass = item.change >= 0 ? 'positive' : 'negative';
+        const changeSign = (item.change >= 0 ? '+' : '') + item.change.toFixed(2) + '%';
+        const priceLabel = getText('price'), changeLabel = getText('change'), highLabel = getText('high'), lowLabel = getText('low'), volumeLabel = getText('volume');
+        const marketCapLabel = getText('marketCap'), epsLabel = getText('eps'), peLabel = getText('pe');
+        
+        let bodyHtml = '';
+        if(item.unit) {
+            bodyHtml = `<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:0.3rem">
+                <div><div style="color:#8e9aaf;">${priceLabel}</div><div style="font-size:1.1rem;">${formatPrice(item.price)} ${item.unit}</div></div>
+                <div><div style="color:#8e9aaf;">${changeLabel}</div><div class="${changeClass}" style="font-size:0.9rem;">${changeSign}</div></div>
+                <div><div style="color:#8e9aaf;">${highLabel}</div><div><strong>${item.high}</strong></div></div>
+                <div><div style="color:#8e9aaf;">${lowLabel}</div><div><strong>${item.low}</strong></div></div>
+                <div><div style="color:#8e9aaf;">${volumeLabel}</div><div><strong>${item.volume}</strong></div></div>
+            </div>`;
+        } else if(currentMarket === "crypto" || currentMarket === "us_stocks") {
+            const currencySymbol = currentMarket === "crypto" ? "$" : "$";
+            bodyHtml = `<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:0.3rem">
+                <div><div style="color:#8e9aaf;">${priceLabel}</div><div style="font-size:1.1rem;">${currencySymbol}${formatPrice(item.price)}</div></div>
+                <div><div style="color:#8e9aaf;">${changeLabel}</div><div class="${changeClass}" style="font-size:0.9rem;">${changeSign}</div></div>
+                <div><div style="color:#8e9aaf;">${highLabel}</div><div><strong>${item.high}</strong></div></div>
+                <div><div style="color:#8e9aaf;">${lowLabel}</div><div><strong>${item.low}</strong></div></div>
+                <div><div style="color:#8e9aaf;">${marketCapLabel}</div><div><strong>${item.marketCap}</strong></div></div>
+                <div><div style="color:#8e9aaf;">${volumeLabel}</div><div><strong>${item.volume}</strong></div></div>
+            </div>`;
+        } else {
+            bodyHtml = `<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:0.3rem">
+                <div><div style="color:#8e9aaf;">${priceLabel}</div><div style="font-size:1.1rem;">${formatPrice(item.price)}</div></div>
+                <div><div style="color:#8e9aaf;">${changeLabel}</div><div class="${changeClass}" style="font-size:0.9rem;">${changeSign}</div></div>
+                <div><div style="color:#8e9aaf;">${highLabel}</div><div><strong>${item.high}</strong></div></div>
+                <div><div style="color:#8e9aaf;">${lowLabel}</div><div><strong>${item.low}</strong></div></div>
+                <div><div style="color:#8e9aaf;">${volumeLabel}</div><div><strong>${item.volume}</strong></div></div>
+                ${item.eps ? `<div><div style="color:#8e9aaf;">${epsLabel}</div><div><strong>${item.eps}</strong></div></div>` : ''}
+                ${item.pe ? `<div><div style="color:#8e9aaf;">${peLabel}</div><div><strong>${item.pe}</strong></div></div>` : ''}
+            </div>`;
+        }
+        document.getElementById('modalBody').innerHTML = bodyHtml;
+        
+        showSuggestion(item);
+        
+        setTimeout(() => {
+            renderModalCharts(item);
+            const pred = item.pred || 0;
+            document.getElementById('chartPrediction').innerHTML = `📊 ${getText('prediction')}: ${getPredictionText(pred)}`;
+        }, 100);
+        
+        modal.classList.add('active');
+    }
+
+    function closeModal() {
+        document.getElementById('modal').classList.remove('active');
+        Object.keys(modalCharts).forEach(key => {
+            if (modalCharts[key]) { modalCharts[key].destroy(); delete modalCharts[key]; }
+        });
+        modalCharts = {};
+    }
+
+    // ==================== رندر کارت‌ها ====================
+    function getMarketStats(marketData) {
+        const total = marketData.length, greens = marketData.filter(i => i.change > 0).length, reds = marketData.filter(i => i.change < 0).length;
+        const avgChange = (marketData.reduce((s,i) => s + i.change, 0) / total).toFixed(1);
+        const greenPercent = (greens / total * 100).toFixed(0);
+        return { total, greens, reds, avgChange, greenPercent };
+    }
+
+    function renderOverview() {
+        const grid = document.getElementById("cardGrid");
+        if(!grid) return;
+        const overviewTitle = getText('overview.title');
+        const totalLabel = getText('overview.total');
+        const greenLabel = currentLang === 'en' ? "Green" : "🟢 سبز";
+        const redLabel = currentLang === 'en' ? "Red" : "🔴 قرمز";
+        const avgLabel = currentLang === 'en' ? "Avg" : "میانگین";
+        const marketsList = [
+            { name: currentLang === 'en' ? "🪙 Crypto" : "🪙 رمزارزها", icon: "₿", color: "#f7931a", stats: getMarketStats(cryptoData), key: "crypto" },
+            { name: currentLang === 'en' ? "🇮🇷 Stocks" : "🇮🇷 بورس ایران", icon: "🏛️", color: "#3498db", stats: getMarketStats(stockData), key: "stock" },
+            { name: currentLang === 'en' ? "🥇 Metals" : "🥇 فلزات", icon: "🥇", color: "#fbb034", stats: getMarketStats(metalsData), key: "metals" },
+            { name: currentLang === 'en' ? "💱 Forex" : "💱 ارزها", icon: "💵", color: "#2ecc71", stats: getMarketStats(currencyData), key: "currency" },
+            { name: currentLang === 'en' ? "🛢️ Energy" : "🛢️ انرژی", icon: "🛢️", color: "#e67e22", stats: getMarketStats(energyData), key: "energy" },
+            { name: currentLang === 'en' ? "🇺🇸 US Stocks" : "🇺🇸 سهام آمریکا", icon: "📊", color: "#4285f4", stats: getMarketStats(usStocksData), key: "us_stocks" }
+        ];
+        let html = `<div style="margin-bottom: 1rem;"><h2 style="color: #f6b93b;">${overviewTitle}</h2></div><div class="markets-overview">`;
+        for(const market of marketsList) {
+            const fillColor = market.stats.greenPercent > 50 ? "#2ed573" : "#ff6b6b";
+            const analysis = market.stats.greenPercent > 60 ? (currentLang === 'en' ? "🔥 Strong Up" : "🔥 صعود قوی") : 
+                            market.stats.greenPercent > 50 ? (currentLang === 'en' ? "📈 Mild Up" : "📈 صعود ملایم") : 
+                            market.stats.greenPercent > 40 ? (currentLang === 'en' ? "⚖️ Neutral" : "⚖️ متعادل") : 
+                            (currentLang === 'en' ? "📉 Down" : "📉 نزولی");
+            html += `<div class="market-card" onclick="switchToMarket('${market.key}')">
+                <div class="market-header"><div class="market-icon">${market.icon}</div><div class="market-title">${market.name}</div></div>
+                <div class="market-stats">
+                    <div class="market-stat"><div class="market-stat-label">${totalLabel}</div><div class="market-stat-value">${market.stats.total}</div></div>
+                    <div class="market-stat"><div class="market-stat-label">${greenLabel}</div><div class="market-stat-value positive">${market.stats.greens}</div></div>
+                    <div class="market-stat"><div class="market-stat-label">${redLabel}</div><div class="market-stat-value negative">${market.stats.reds}</div></div>
+                    <div class="market-stat"><div class="market-stat-label">${avgLabel}</div><div class="market-stat-value ${market.stats.avgChange>=0?'positive':'negative'}">${market.stats.avgChange>=0?'+':''}${market.stats.avgChange}%</div></div>
+                </div>
+                <div class="market-progress"><div class="market-progress-fill" style="width: ${market.stats.greenPercent}%; background: ${fillColor}"></div></div>
+                <div class="market-analysis">${analysis} | ${market.stats.greenPercent}% Green</div>
+            </div>`;
+        }
+        html += `</div>`;
+        grid.innerHTML = html;
+    }
+
+    function switchToMarket(market) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector(`.tab-btn[data-market="${market}"]`)?.classList.add('active');
+        currentMarket = market;
+        currentFilter = "all";
+        searchText = "";
+        document.getElementById('searchInput').value = "";
+        document.querySelectorAll('.filter-btn').forEach(f => f.classList.remove('active'));
+        document.querySelector('.filter-btn[data-filter="all"]')?.classList.add('active');
+        const filterBar = document.getElementById('filterBar');
+        if(currentMarket === "overview") filterBar.style.display = "none";
+        else filterBar.style.display = "flex";
+        Object.keys(chartInstances).forEach(key => {
+            try { chartInstances[key].destroy(); } catch(e) {}
+            delete chartInstances[key];
+        });
+        renderCards();
+    }
+
+    function renderCards() {
+        if(currentMarket === "overview") { renderOverview(); updateStatsBar(); return; }
+        
+        const grid = document.getElementById("cardGrid");
+        if(!grid) return;
+        
+        let data = [...getCurrentData()];
+        if(currentFilter === "gainers") data = data.filter(i => i.change > 0);
+        else if(currentFilter === "losers") data = data.filter(i => i.change < 0);
+        
+        if(searchText.trim() !== "") {
+            const q = searchText.trim().toLowerCase();
+            data = data.filter(i => i.name.toLowerCase().includes(q) || i.symbol.toLowerCase().includes(q));
+        }
+        
+        if(data.length === 0) { grid.innerHTML = '<div style="text-align:center;padding:1.5rem">🔍 Not found</div>'; updateStatsBar(); return; }
+        
+        const priceLabel = getText('price'), changeLabel = getText('change'), highLabel = getText('high'), lowLabel = getText('low'), volumeLabel = getText('volume');
+        const marketCapLabel = getText('marketCap'), epsLabel = getText('eps'), peLabel = getText('pe');
+        
+        let html = '';
+        for(const item of data) {
+            const chClass = item.change >= 0 ? 'positive' : 'negative';
+            const chSign = (item.change >= 0 ? '+' : '') + item.change.toFixed(2) + '%';
+            const predText = getPredictionText(item.pred);
+            const translatedName = translateName(item.name);
+            let priceStr = '', detailsStr = '';
+            
+            if(item.unit) {
+                priceStr = `${formatPrice(item.price)} ${item.unit}`;
+                detailsStr = `<div><span style="color:#8e9aaf;">${highLabel}:</span> ${item.high}</div><div><span style="color:#8e9aaf;">${lowLabel}:</span> ${item.low}</div><div><span style="color:#8e9aaf;">${volumeLabel}:</span> ${item.volume}</div>`;
+            } else if(currentMarket === "crypto" || currentMarket === "us_stocks") {
+                const currencySymbol = currentMarket === "crypto" ? "$" : "$";
+                priceStr = `${currencySymbol}${formatPrice(item.price)}`;
+                detailsStr = `<div><span style="color:#8e9aaf;">${highLabel}:</span> ${item.high}</div><div><span style="color:#8e9aaf;">${lowLabel}:</span> ${item.low}</div><div><span style="color:#8e9aaf;">${marketCapLabel}:</span> ${item.marketCap}</div><div><span style="color:#8e9aaf;">${volumeLabel}:</span> ${item.volume}</div>`;
+            } else {
+                priceStr = `${formatPrice(item.price)}`;
+                detailsStr = `<div><span style="color:#8e9aaf;">${highLabel}:</span> ${item.high}</div><div><span style="color:#8e9aaf;">${lowLabel}:</span> ${item.low}</div><div><span style="color:#8e9aaf;">${volumeLabel}:</span> ${item.volume}</div>${item.eps ? `<div><span style="color:#8e9aaf;">${epsLabel}:</span> ${item.eps}</div>` : ''}${item.pe ? `<div><span style="color:#8e9aaf;">${peLabel}:</span> ${item.pe}</div>` : ''}`;
+            }
+            
+            const chartId = `chart-${item.id}`;
+            html += `<div class="card" onclick="showDetails(${item.id})">
+                <div class="card-header">
+                    <div class="item-info">
+                        <div class="item-icon" style="background:${item.color}20;border:2px solid ${item.color}"><span>${item.icon}</span></div>
+                        <div class="item-name"><h3>${translatedName}</h3><div class="item-symbol">${item.symbol}</div></div>
+                    </div>
+                    <div class="price-section">
+                        <div class="price">${priceStr}</div>
+                        <div class="change ${chClass}">${chSign}</div>
+                    </div>
+                </div>
+                <div class="chart-container"><canvas id="${chartId}"></canvas></div>
+                <div class="details">${detailsStr}</div>
+                <div class="prediction ${chClass}">${predText}</div>
+            </div>`;
+        }
+        grid.innerHTML = html;
+        
+        setTimeout(() => {
+            data.forEach(item => {
+                const chartId = `chart-${item.id}`;
+                renderCardChart(chartId, item);
+            });
+        }, 150);
+        
+        updateStatsBar();
+    }
+
+    function updateStatsBar() {
+        const statsBar = document.getElementById('statsBar');
+        const totalLabel = getText('stats.total'), greenLabel = getText('stats.green'), redLabel = getText('stats.red');
+        const analysisLabel = getText('stats.analysis'), analyzeLabel = getText('stats.analyze');
+        if(currentMarket === "overview") {
+            const totalSymbols = cryptoData.length + stockData.length + metalsData.length + currencyData.length + energyData.length + usStocksData.length;
+            statsBar.innerHTML = `<div class="stat-item" onclick="showAnalysis()" style="cursor:pointer;"><div class="stat-label">${analysisLabel}</div><div class="stat-value" style="color:#f6b93b;">${analyzeLabel}</div></div>
+                <div class="stat-item"><div class="stat-label">${getText('overview.total')}</div><div class="stat-value">${totalSymbols}</div></div>`;
+        } else {
+            const data = getCurrentData();
+            const greens = data.filter(i => i.change > 0).length;
+            const reds = data.filter(i => i.change < 0).length;
+            statsBar.innerHTML = `<div class="stat-item"><div class="stat-label">${totalLabel}</div><div class="stat-value">${data.length}</div></div>
+                <div class="stat-item"><div class="stat-label">${greenLabel}</div><div class="stat-value positive">${greens}</div></div>
+                <div class="stat-item"><div class="stat-label">${redLabel}</div><div class="stat-value negative">${reds}</div></div>
+                <div class="stat-item" onclick="showAnalysis()" style="cursor:pointer;"><div class="stat-label">${analysisLabel}</div><div class="stat-value" style="color:#f6b93b;">${analyzeLabel}</div></div>`;
+        }
+    }
+
+    function setupEventListeners() {
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentMarket = btn.getAttribute('data-market');
+                currentFilter = "all";
+                searchText = "";
+                document.getElementById('searchInput').value = "";
+                document.querySelectorAll('.filter-btn').forEach(f => f.classList.remove('active'));
+                document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+                const filterBar = document.getElementById('filterBar');
+                if(currentMarket === "overview") filterBar.style.display = "none";
+                else filterBar.style.display = "flex";
+                Object.keys(chartInstances).forEach(key => {
+                    try { chartInstances[key].destroy(); } catch(e) {}
+                    delete chartInstances[key];
+                });
+                renderCards();
+            });
+        });
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if(currentMarket === "overview") return;
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.getAttribute('data-filter');
+                renderCards();
+            });
+        });
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            if(currentMarket === "overview") return;
+            searchText = e.target.value;
+            renderCards();
+        });
+    }
+
+    // ==================== تم ====================
+    function initTheme() {
+        const savedTheme = localStorage.getItem('marketTheme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light');
+            document.getElementById('themeBtn').innerHTML = '☀️ Day Mode';
+        } else {
+            document.body.classList.remove('light');
+            document.getElementById('themeBtn').innerHTML = '🌙 Night Mode';
+        }
+    }
+    document.getElementById('themeBtn').addEventListener('click', () => {
+        document.body.classList.toggle('light');
+        if (document.body.classList.contains('light')) {
+            document.getElementById('themeBtn').innerHTML = '☀️ Day Mode';
+            localStorage.setItem('marketTheme', 'light');
+        } else {
+            document.getElementById('themeBtn').innerHTML = '🌙 Night Mode';
+            localStorage.setItem('marketTheme', 'dark');
+        }
+    });
+
+    // ==================== زبان ====================
+    function initLanguage() {
+        const savedLang = localStorage.getItem('marketLang') || 'fa';
+        currentLang = savedLang;
+        if (currentLang === 'en') {
+            document.getElementById('langBtn').innerHTML = '🇮🇷 فارسی';
+        } else {
+            document.getElementById('langBtn').innerHTML = '🇬🇧 English';
+        }
+        updateLanguage();
+    }
+    document.getElementById('langBtn').addEventListener('click', () => {
+        currentLang = currentLang === 'fa' ? 'en' : 'fa';
+        if (currentLang === 'en') {
+            document.getElementById('langBtn').innerHTML = '🇮🇷 فارسی';
+        } else {
+            document.getElementById('langBtn').innerHTML = '🇬🇧 English';
+        }
+        localStorage.setItem('marketLang', currentLang);
+        updateLanguage();
+        renderCards();
+    });
+
+    // ==================== API ====================
+    async function fetchLivePrices() {
+        try {
+            const cryptoRes = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=false');
+            if (cryptoRes.ok) {
+                const cryptoApi = await cryptoRes.json();
+                cryptoData.forEach((item, idx) => {
+                    if (cryptoApi[idx]) {
+                        item.price = cryptoApi[idx].current_price;
+                        item.change = cryptoApi[idx].price_change_percentage_24h || 0;
+                        item.pred = item.change * 0.8;
+                        const baseHigh = item.price * 1.02;
+                        const baseLow = item.price * 0.98;
+                        item.high = parseFloat(baseHigh.toFixed(4));
+                        item.low = parseFloat(baseLow.toFixed(4));
+                    }
+                });
+            }
+            const fxRes = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+            if (fxRes.ok) {
+                const fxData = await fxRes.json();
+                const usdToIRR = 170000;
+                currencyData.forEach(item => {
+                    if (fxData.rates && fxData.rates[item.symbol]) {
+                        item.price = fxData.rates[item.symbol] * usdToIRR;
+                    }
+                });
+            }
+            document.getElementById('statusBadge').innerHTML = 'LIVE';
+            document.getElementById('statusBadge').style.background = '#ff4444';
+            document.getElementById('lastUpdate').innerHTML = `✅ ${new Date().toLocaleTimeString('fa-IR')}`;
+        } catch(e) {
+            document.getElementById('statusBadge').innerHTML = 'Offline';
+            document.getElementById('statusBadge').style.background = '#f6b93b';
+            document.getElementById('lastUpdate').innerHTML = `📡 ${new Date().toLocaleTimeString('fa-IR')} (Offline)`;
+        }
+        if (currentMarket !== "overview") renderCards(); else renderOverview();
+        updateStatsBar();
+    }
+
+    function simulateUpdate() {
+        if (document.getElementById('statusBadge').innerHTML === 'Offline') {
+            const allData = [...cryptoData, ...stockData, ...metalsData, ...currencyData, ...energyData, ...usStocksData];
+            for (let item of allData) {
+                let ch = (Math.random() - 0.5) * 4;
+                item.price = item.price * (1 + ch / 100);
+                item.change = ch;
+                item.pred = ch * 0.8;
+                if(item.high) item.high = item.price * 1.02;
+                if(item.low) item.low = item.price * 0.98;
+            }
+        }
+        if (currentMarket !== "overview") renderCards(); else renderOverview();
+        updateStatsBar();
+    }
+
+    // PWA
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        const installBtn = document.getElementById('installAppBtn');
+        if (installBtn) installBtn.style.display = 'inline-block';
+    });
+    document.getElementById('installAppBtn').addEventListener('click', () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then(() => {
+                deferredPrompt = null;
+                document.getElementById('installAppBtn').style.display = 'none';
+            });
+        }
+    });
+
+    // بستن مودال
+    document.getElementById('modal').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeModal();
+    });
+
+    // ==================== اجرا ====================
+    initTheme();
+    initLanguage();
+    renderCards();
+    setupEventListeners();
+    fetchLivePrices();
+    setInterval(fetchLivePrices, 60000);
+    setInterval(simulateUpdate, 15000);
+</script>
+</body>
+</html>

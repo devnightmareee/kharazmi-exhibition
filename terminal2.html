@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ترمینال مدیریت معاملات | ثبت سفارش + ریسک</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0a0c12; color: #f0f3fa; font-family: 'Segoe UI', sans-serif; padding: 1rem; }
+        body.light { background: #f5f7fa; color: #1a1a2e; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #2a2f3f; }
+        .btn { background: #f6b93b; color: #0a0c12; border: none; padding: 0.4rem 1rem; border-radius: 2rem; cursor: pointer; font-weight: bold; }
+        .link-btn { background: rgba(30,36,56,0.8); color: #cdd9ff; padding: 0.35rem 0.8rem; border-radius: 2rem; text-decoration: none; font-size: 0.7rem; transition: all 0.3s; }
+        .link-btn:hover { background: #f6b93b; color: #0a0c12; }
+        .form-card, .trades-table { background: #1e2438; border-radius: 1rem; padding: 1rem; margin-bottom: 1rem; }
+        .form-row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+        select, input { padding: 0.4rem; border-radius: 0.5rem; border: none; background: #131724; color: #fff; flex: 1; min-width: 100px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+        .stat-card { background: rgba(0,0,0,0.3); border-radius: 0.8rem; padding: 0.5rem; text-align: center; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 0.5rem; border-bottom: 1px solid #2a2f3f; text-align: center; font-size: 0.75rem; }
+        .positive { color: #2ed573; }
+        .negative { color: #ff6b6b; }
+        .warning { background: rgba(255,107,107,0.2); }
+        @media (max-width: 768px) { .form-row { flex-direction: column; } }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="navbar">
+    <h1>⚙️ ترمینال مدیریت معاملات و ریسک</h1>
+    <div>
+        <a href="index.html" class="link-btn">📈 بازگشت به بازار و آنالیزور</a>
+        <button class="btn" id="themeBtn" style="margin-right:0.5rem;">🌙 تم شب</button>
+    </div>
+</div>
+
+<div class="form-card">
+    <h3>➕ ثبت معامله جدید</h3>
+    <div class="form-row">
+        <select id="symbolSelect"></select>
+        <select id="tradeType"><option value="buy">خرید</option><option value="sell">فروش</option></select>
+        <input type="number" id="quantity" placeholder="تعداد">
+        <input type="number" id="price" placeholder="قیمت">
+        <input type="number" id="tp" placeholder="حد سود (TP)">
+        <input type="number" id="sl" placeholder="حد ضرر (SL)">
+        <button class="btn" id="addTradeBtn">ثبت معامله</button>
+    </div>
+</div>
+
+<div class="stats-grid" id="statsGrid"></div>
+<div class="form-card"><canvas id="allocationChart" width="300" height="200"></canvas></div>
+
+<div class="trades-table">
+    <h3>📜 تاریخچه معاملات <input type="text" id="filterTrades" placeholder="فیلتر نماد..."></h3>
+    <div style="overflow-x:auto;"><table id="tradesTable"><thead><tr><th>نماد</th><th>نوع</th><th>تعداد</th><th>قیمت</th><th>حد سود</th><th>حد ضرر</th><th>سود/زیان شناور</th><th>عملیات</th></tr></thead><tbody></tbody></table></div>
+</div>
+
+<script>
+    // ==================== دیتابیس کامل نمادها (همان 100 نماد ترمینال یک) ====================
+    const symbolsList = [
+        // رمزارزها (20)
+        "BTC","ETH","USDT","BNB","SOL","XRP","ADA","DOGE","TRX","AVAX","DOT","LTC","LINK","UNI","ATOM","ALGO","VET","XLM","XTZ","NEAR",
+        // بورس ایران (20)
+        "فولاد","فارس","فملی","وامید","وبملت","خپارس","سایپا","کگل","اخابر","شپنا","حکشتی","سفارس","خودرو","بایران","پجم","ذوب","دبرکت","کالوند","آذر","نتندی",
+        // فلزات (20)
+        "طلا","XAU","نقره","پلاتین","مس","آلومینیوم","روی","نیکل","سرب","قلع","کبالت","لیتیوم","سکه","نیم سکه","ربع سکه","گرم طلا","پالادیوم","تیتانیوم","اورانیوم","منگنز",
+        // ارزها (20)
+        "USD","EUR","GBP","AED","TRY","CAD","AUD","CHF","CNY","INR","KRW","SGD","QAR","IQD","RUB","JPY","NZD","MYR","THB","KWD",
+        // انرژی (20)
+        "BRENT","WTI","NG","GAS","FO","DIESEL","PRO","ETHN","MET","COAL","URAN","H2","BIO","ETHO","KERO","BUT","NAP","ASPH","LPG","HFO"
+    ];
+
+    // قیمت‌های پیش‌فرض (اگر ترمینال یک باز نباشد)
+    let realPrices = {};
+    symbolsList.forEach(sym => { realPrices[sym] = 100 + Math.random() * 500; });
+
+    // بارگذاری معاملات از localStorage
+    let trades = JSON.parse(localStorage.getItem('trades')) || [];
+    let portfolioChart = null;
+
+    // ==================== توابع اصلی ====================
+    function saveTrades() { localStorage.setItem('trades', JSON.stringify(trades)); renderTradesTable(); updateStats(); updateChart(); }
+    
+    function addTrade() {
+        let symbol = document.getElementById('symbolSelect').value;
+        let type = document.getElementById('tradeType').value;
+        let quantity = parseFloat(document.getElementById('quantity').value);
+        let price = parseFloat(document.getElementById('price').value);
+        let tp = parseFloat(document.getElementById('tp').value) || null;
+        let sl = parseFloat(document.getElementById('sl').value) || null;
+        if(!symbol || isNaN(quantity) || isNaN(price)) { alert("لطفاً اطلاعات کامل وارد کنید"); return; }
+        trades.push({ id: Date.now(), symbol, type, quantity, price, tp, sl, date: new Date().toLocaleString() });
+        document.getElementById('quantity').value = ''; document.getElementById('price').value = ''; document.getElementById('tp').value = ''; document.getElementById('sl').value = '';
+        saveTrades();
+    }
+    
+    function deleteTrade(id) { trades = trades.filter(t => t.id !== id); saveTrades(); }
+    
+    function editTrade(id) {
+        let trade = trades.find(t => t.id === id);
+        if(trade){
+            document.getElementById('symbolSelect').value = trade.symbol;
+            document.getElementById('tradeType').value = trade.type;
+            document.getElementById('quantity').value = trade.quantity;
+            document.getElementById('price').value = trade.price;
+            document.getElementById('tp').value = trade.tp || '';
+            document.getElementById('sl').value = trade.sl || '';
+            deleteTrade(id);
+        }
+    }
+    
+    function getCurrentPrice(symbol) { return realPrices[symbol] || 100; }
+    
+    function calculateFloatingPL(trade) { 
+        let cp = getCurrentPrice(trade.symbol); 
+        if(trade.type === 'buy') return (cp - trade.price) * trade.quantity; 
+        else return (trade.price - cp) * trade.quantity; 
+    }
+    
+    function updateStats() {
+        let totalInvestment = 0, totalFloatingPL = 0, holdings = {};
+        trades.forEach(t => { if(t.type === 'buy') { totalInvestment += t.price * t.quantity; holdings[t.symbol] = (holdings[t.symbol]||0) + t.quantity; } });
+        let currentValue = 0; for(let sym in holdings) currentValue += getCurrentPrice(sym) * holdings[sym];
+        totalFloatingPL = currentValue - totalInvestment;
+        let riskWarnings = trades.filter(t => t.sl && getCurrentPrice(t.symbol) <= t.sl).length;
+        document.getElementById('statsGrid').innerHTML = `
+            <div class="stat-card"><div>💰 مجموع سرمایه</div><div>${totalInvestment.toFixed(2)}</div></div>
+            <div class="stat-card"><div>📊 ارزش فعلی سبد</div><div>${currentValue.toFixed(2)}</div></div>
+            <div class="stat-card"><div>📈 سود/زیان شناور</div><div class="${totalFloatingPL>=0?'positive':'negative'}">${totalFloatingPL>=0?'+':''}${totalFloatingPL.toFixed(2)}</div></div>
+            <div class="stat-card"><div>⚠️ هشدار حد ضرر</div><div>${riskWarnings} معامله</div></div>
+        `;
+    }
+    
+    function updateChart() {
+        let holdings = {};
+        trades.forEach(t => { if(t.type === 'buy') holdings[t.symbol] = (holdings[t.symbol]||0) + t.quantity; });
+        let ctx = document.getElementById('allocationChart').getContext('2d');
+        if(portfolioChart) portfolioChart.destroy();
+        let labels = Object.keys(holdings);
+        let values = labels.map(sym => getCurrentPrice(sym) * holdings[sym]);
+        if(labels.length) {
+            portfolioChart = new Chart(ctx, { 
+                type: 'pie', 
+                data: { labels, datasets: [{ data: values, backgroundColor: ['#f6b93b','#2ed573','#3498db','#e74c3c','#9b59b6','#1abc9c','#e67e22','#95a5a6'] }] } 
+            });
+        }
+    }
+    
+    function renderTradesTable() {
+        let filter = document.getElementById('filterTrades').value.toLowerCase();
+        let filtered = trades.filter(t => t.symbol.toLowerCase().includes(filter));
+        let tbody = document.querySelector('#tradesTable tbody');
+        if(!tbody) return;
+        tbody.innerHTML = '';
+        filtered.forEach(t => {
+            let pl = calculateFloatingPL(t);
+            let row = tbody.insertRow();
+            row.innerHTML = `
+                <td>${t.symbol}</td>
+                <td>${t.type==='buy'?'خرید':'فروش'}</td>
+                <td>${t.quantity}</td>
+                <td>${t.price}</td>
+                <td>${t.tp || '-'}</td>
+                <td>${t.sl || '-'}</td>
+                <td class="${pl>=0?'positive':'negative'}">${pl>=0?'+':''}${pl.toFixed(2)}</td>
+                <td><button onclick="editTrade(${t.id})" style="background:#3498db; border:none; color:white; padding:0.2rem 0.5rem; border-radius:0.5rem; cursor:pointer;">✏️</button> <button onclick="deleteTrade(${t.id})" style="background:#e74c3c; border:none; color:white; padding:0.2rem 0.5rem; border-radius:0.5rem; cursor:pointer;">🗑️</button></td>
+            `;
+            if(t.sl && getCurrentPrice(t.symbol) <= t.sl) row.classList.add('warning');
+        });
+    }
+    
+    // به‌روزرسانی قیمت‌ها (شبیه‌سازی در صورت آفلاین بودن ترمینال یک)
+    function updatePrices() {
+        for(let sym of symbolsList) {
+            let change = (Math.random() - 0.5) * 3;
+            realPrices[sym] = realPrices[sym] * (1 + change / 100);
+        }
+        updateStats(); renderTradesTable(); updateChart();
+    }
+    
+    // ==================== مقداردهی اولیه ====================
+    function init() {
+        let select = document.getElementById('symbolSelect');
+        symbolsList.forEach(sym => { let opt = document.createElement('option'); opt.value = sym; opt.innerText = sym; select.appendChild(opt); });
+        document.getElementById('addTradeBtn').addEventListener('click', addTrade);
+        document.getElementById('filterTrades').addEventListener('input', renderTradesTable);
+        updateStats(); renderTradesTable(); updateChart();
+        setInterval(updatePrices, 15000);
+    }
+    
+    // تم شب/روز
+    document.getElementById('themeBtn').addEventListener('click', () => {
+        document.body.classList.toggle('light');
+        document.getElementById('themeBtn').innerText = document.body.classList.contains('light') ? '☀️ تم روز' : '🌙 تم شب';
+    });
+    
+    // expose functions for inline buttons
+    window.editTrade = editTrade;
+    window.deleteTrade = deleteTrade;
+    
+    init();
+</script>
+</body>
+</html>
